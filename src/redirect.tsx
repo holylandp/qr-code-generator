@@ -1,80 +1,100 @@
-import { useState, useEffect, useRef } from 'react';
-import { getDynamicQRCodeByShortCode, recordScan } from '../lib/supabase';
+import { useEffect, useState } from 'react';
+import { getDynamicQRCodeByShortCode, recordScan } from './lib/supabase';
 
-export function RedirectHandler() {
-  const [status, setStatus] = useState<'loading' | 'found' | 'not-found'>('loading');
-  const [targetUrl, setTargetUrl] = useState('');
-  const [countdown, setCountdown] = useState(3);
+function RedirectPage() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleRedirect = async () => {
-      // Get short code from URL path
-      const path = window.location.pathname;
-      const match = path.match(/^\/r\/([A-Za-z0-9]+)$/);
+      // 从URL路径获取短码
+      const pathParts = window.location.pathname.split('/');
+      const shortCode = pathParts[pathParts.length - 1];
 
-      if (!match) {
-        setStatus('not-found');
+      if (!shortCode || shortCode === 'r') {
+        setError('无效的短码');
+        setLoading(false);
         return;
       }
 
-      const shortCode = match[1];
-      console.log('Looking up short code:', shortCode);
+      try {
+        // 查询数据库获取目标URL
+        const qrCode = await getDynamicQRCodeByShortCode(shortCode);
 
-      // Fetch from Supabase
-      const code = await getDynamicQRCodeByShortCode(shortCode);
+        if (!qrCode) {
+          setError('活码不存在或已失效');
+          setLoading(false);
+          return;
+        }
 
-      if (code) {
-        console.log('Found code:', code);
-        setTargetUrl(code.target_url);
-        setStatus('found');
-
-        // Record scan
+        // 记录扫描
         await recordScan(shortCode);
-      } else {
-        console.log('Code not found for:', shortCode);
-        setStatus('not-found');
+
+        // 跳转到目标URL
+        window.location.href = qrCode.target_url;
+      } catch (err) {
+        console.error('Redirect error:', err);
+        setError('跳转失败，请重试');
+        setLoading(false);
       }
     };
 
     handleRedirect();
   }, []);
 
-  useEffect(() => {
-    if (status === 'found' && targetUrl && countdown > 0) {
-      const timer = setTimeout(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else if (status === 'found' && countdown === 0 && targetUrl) {
-      window.location.href = targetUrl;
-    }
-  }, [status, targetUrl, countdown]);
-
-  const handleRedirectNow = () => {
-    if (targetUrl) {
-      window.location.href = targetUrl;
-    }
-  };
-
-  if (status === 'loading') {
+  if (loading) {
     return (
-      <div className="redirect-container">
-        <div className="redirect-content">
-          <div className="loading-spinner"></div>
-          <p>正在查找链接...</p>
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: '#fff',
+        fontSize: '1.2rem'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ marginBottom: '20px' }}>⏳</div>
+          <div>正在跳转...</div>
         </div>
       </div>
     );
   }
 
-  if (status === 'not-found') {
+  if (error) {
     return (
-      <div className="redirect-container">
-        <div className="redirect-content">
-          <div className="error-icon">✕</div>
-          <h1>链接不存在</h1>
-          <p>抱歉，您访问的活码链接未找到或已被删除。</p>
-          <button onClick={() => window.location.href = '/'}>
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: '#fff',
+        padding: '20px'
+      }}>
+        <div style={{ 
+          textAlign: 'center', 
+          background: 'rgba(255,255,255,0.1)',
+          padding: '40px',
+          borderRadius: '16px',
+          maxWidth: '400px'
+        }}>
+          <div style={{ fontSize: '4rem', marginBottom: '20px' }}>⚠️</div>
+          <h2 style={{ marginBottom: '10px' }}>跳转失败</h2>
+          <p style={{ marginBottom: '20px' }}>{error}</p>
+          <button
+            onClick={() => window.location.href = '/'}
+            style={{
+              padding: '12px 32px',
+              background: '#fff',
+              color: '#667eea',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              fontWeight: '600'
+            }}
+          >
             返回首页
           </button>
         </div>
@@ -82,22 +102,7 @@ export function RedirectHandler() {
     );
   }
 
-  return (
-    <div className="redirect-container">
-      <div className="redirect-content">
-        <div className="redirect-icon">↗</div>
-        <h1>即将跳转</h1>
-        <p>您正在前往:</p>
-        <div className="target-url">{targetUrl}</div>
-        <p className="countdown">
-          {countdown > 0 ? `${countdown} 秒后自动跳转...` : '正在跳转...'}
-        </p>
-        <button onClick={handleRedirectNow} className="redirect-now-btn">
-          立即跳转
-        </button>
-      </div>
-    </div>
-  );
+  return null;
 }
 
-export default RedirectHandler;
+export default RedirectPage;
