@@ -113,25 +113,43 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
             for (let col = 0; col < moduleCount; col++) {
               const x = col * moduleSize;
               const y = row * moduleSize;
-              const idx = (Math.floor(y + moduleSize/2) * config.width + Math.floor(x + moduleSize/2)) * 4;
-              
+              const idx = (Math.floor(y + moduleSize / 2) * config.width + Math.floor(x + moduleSize / 2)) * 4;
+
+              // Check if pixel is dark (QR code module)
               if (data[idx] < 128) {
-                const size = moduleSize - 1;
-                
+                const size = Math.floor(moduleSize) - 1;
+                const centerX = x + moduleSize / 2;
+                const centerY = y + moduleSize / 2;
+                const radius = size * 0.4;
+
                 switch (config.styleType) {
                   case 'rounded':
+                    // Use path with arc for rounded corners (more compatible)
                     ctx.beginPath();
-                    ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
+                    const r = size * 0.2; // corner radius
+                    const s = size;
+                    const px = x + 0.5;
+                    const py = y + 0.5;
+                    ctx.moveTo(px + r, py);
+                    ctx.lineTo(px + s - r, py);
+                    ctx.quadraticCurveTo(px + s, py, px + s, py + r);
+                    ctx.lineTo(px + s, py + s - r);
+                    ctx.quadraticCurveTo(px + s, py + s, px + s - r, py + s);
+                    ctx.lineTo(px + r, py + s);
+                    ctx.quadraticCurveTo(px, py + s, px, py + s - r);
+                    ctx.lineTo(px, py + r);
+                    ctx.quadraticCurveTo(px, py, px + r, py);
+                    ctx.closePath();
                     ctx.fill();
                     break;
                   case 'dot':
                     ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
                     ctx.fill();
                     break;
                   case 'liquid':
                     ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
+                    ctx.arc(centerX, centerY, radius * 1.1, 0, Math.PI * 2);
                     ctx.fill();
                     break;
                   default:
@@ -149,17 +167,25 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
               const x = (config.width - config.logoWidth) / 2;
               const y = (config.height - config.logoHeight) / 2;
 
-              // Logo background
+              // Logo background - use path with arc for rounded corners
               if (config.logoBackgroundColor !== 'transparent') {
                 ctx.fillStyle = config.logoBackgroundColor;
                 ctx.beginPath();
-                ctx.roundRect(
-                  x - config.logoMargin,
-                  y - config.logoMargin,
-                  config.logoWidth + config.logoMargin * 2,
-                  config.logoHeight + config.logoMargin * 2,
-                  config.logoCornerRadius
-                );
+                const lx = x - config.logoMargin;
+                const ly = y - config.logoMargin;
+                const lw = config.logoWidth + config.logoMargin * 2;
+                const lh = config.logoHeight + config.logoMargin * 2;
+                const lr = config.logoCornerRadius;
+                ctx.moveTo(lx + lr, ly);
+                ctx.lineTo(lx + lw - lr, ly);
+                ctx.quadraticCurveTo(lx + lw, ly, lx + lw, ly + lr);
+                ctx.lineTo(lx + lw, ly + lh - lr);
+                ctx.quadraticCurveTo(lx + lw, ly + lh, lx + lw - lr, ly + lh);
+                ctx.lineTo(lx + lr, ly + lh);
+                ctx.quadraticCurveTo(lx, ly + lh, lx, ly + lh - lr);
+                ctx.lineTo(lx, ly + lr);
+                ctx.quadraticCurveTo(lx, ly, lx + lr, ly);
+                ctx.closePath();
                 ctx.fill();
               }
 
