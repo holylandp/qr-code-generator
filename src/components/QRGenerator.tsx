@@ -192,16 +192,6 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
     reader.readAsDataURL(file);
   };
 
-  const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      updateConfig({ backgroundImage: event.target?.result as string });
-    };
-    reader.readAsDataURL(file);
-  };
-
   const downloadQR = () => {
     if (!dataUrl) return;
     const link = document.createElement('a');
