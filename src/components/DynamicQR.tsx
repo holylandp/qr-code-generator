@@ -252,7 +252,7 @@ export function DynamicQR() {
               ctx.drawImage(logo, x, y, logoW, logoH);
               resolve();
             };
-            logo.src = config.logoImage;
+            logo.src = config.logoImage as string;
           });
         }
       }
@@ -581,7 +581,7 @@ function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: str
               ctx.drawImage(logo, x, y, logoW, logoH);
               setIsLoading(false);
             };
-            logo.src = config.logoImage;
+            logo.src = config.logoImage as string;
           } else {
             setIsLoading(false);
           }
