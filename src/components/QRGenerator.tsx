@@ -113,7 +113,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
             for (let col = 0; col < moduleCount; col++) {
               const x = col * moduleSize;
               const y = row * moduleSize;
-              const idx = (Math.floor(y + moduleSize / 2) * config.width + Math.floor(x + moduleSize / 2)) * 4;
+              const idx = (Math.floor(y + moduleSize/2) * config.width + Math.floor(x + moduleSize/2)) * 4;
 
               // Check if pixel is dark (QR code module)
               if (data[idx] < 128) {
@@ -448,7 +448,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
             borderRadius: '12px',
             color: '#fff',
             fontSize: '1rem',
-            fontWeight: 600,
+            fontWeight: '600',
             cursor: dataUrl ? 'pointer' : 'not-allowed',
             marginTop: '10px'
           }}
