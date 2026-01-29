@@ -1,0 +1,86 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  color: #e2e8f0;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+#root { min-height: 100vh; }
+.app { min-height: 100vh; position: relative; }
+.app-container {
+  position: relative; z-index: 10; max-width: 1400px;
+  margin: 0 auto; padding: 20px;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+.app-header { text-align: center; padding: 40px 20px; }
+.app-title {
+  font-size: 2.5rem; font-weight: 700;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-bottom: 10px;
+}
+.title-icon { font-size: 2.2rem; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
+.app-subtitle { color: #94a3b8; font-size: 1rem; }
+.app-main { flex: 1; padding: 20px 0; }
+.tab-container {
+  background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px);
+  border-radius: 24px; border: 1px solid rgba(99, 102, 241, 0.2);
+  overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+.tab-buttons { display: flex; background: rgba(30, 41, 59, 0.8); border-bottom: 1px solid rgba(99, 102, 241, 0.2); }
+.tab-btn {
+  flex: 1; padding: 18px 30px; background: transparent; border: none;
+  color: #94a3b8; font-size: 1rem; font-weight: 500; cursor: pointer;
+  transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;
+  position: relative;
+}
+.tab-btn:hover { color: #e2e8f0; background: rgba(99, 102, 241, 0.1); }
+.tab-btn.active { color: #fff; background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3)); }
+.tab-btn.active::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+.tab-content { padding: 30px; }
+.section { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.app-footer { text-align: center; padding: 30px; color: #64748b; font-size: 0.9rem; }
+.qr-generator { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+@media (max-width: 900px) { .qr-generator { grid-template-columns: 1fr; } }
+.tab-navigation { display: flex; gap: 12px; margin-bottom: 30px; }
+.tab-navigation button {
+  padding: 12px 28px; background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 10px;
+  color: #94a3b8; font-size: 1rem; cursor: pointer; transition: all 0.2s ease;
+}
+.tab-navigation button.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: transparent; color: #fff;
+}
+.code-card {
+  background: rgba(30, 41, 59, 0.6); border-radius: 16px; padding: 24px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+.short-code {
+  font-size: 1.5rem; font-weight: 700; font-family: monospace;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.url-row { display: flex; gap: 10px; }
+.url-input {
+  flex: 1; padding: 10px 14px; background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; color: #e2e8f0;
+}
+.edit-btn, .delete-btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; }
+.edit-btn { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
+.delete-btn { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-content {
+  background: rgba(15, 23, 42, 0.95); border-radius: 16px; padding: 32px;
+  max-width: 500px; width: 90%; border: 1px solid rgba(99, 102, 241, 0.3);
+}
