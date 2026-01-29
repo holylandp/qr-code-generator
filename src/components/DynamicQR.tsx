@@ -305,6 +305,30 @@ export function DynamicQR() {
               </div>
             )}
             
+            <button 
+              className="create-btn" 
+              onClick={createDynamicCode}
+              disabled={isLoading}
+              style={{
+                padding: '16px 48px',
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                border: 'none',
+                borderRadius: '12px',
+                color: '#fff',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                marginBottom: '30px',
+                width: '100%',
+                maxWidth: '300px',
+                alignSelf: 'center',
+                boxShadow: '0 4px 14px rgba(99, 102, 241, 0.3)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {isLoading ? '创建中...' : '创建活码'}
+            </button>
+            
             <div className="qr-customization">
               <h3>配置活码</h3>
               <p className="form-hint" style={{ marginBottom: '20px', color: '#64748b' }}>
@@ -318,14 +342,6 @@ export function DynamicQR() {
                 }}
               />
             </div>
-
-            <button 
-              className="create-btn" 
-              onClick={createDynamicCode}
-              disabled={isLoading}
-            >
-              {isLoading ? '创建中...' : '创建活码'}
-            </button>
           </div>
         </div>
       )}
@@ -470,170 +486,3 @@ export function DynamicQR() {
     </div>
   );
 }
-
-// 活码二维码预览组件
-function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const generate = async () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      
-      const config = code.qr_config as QRCodeConfig;
-      const qrUrl = `${baseUrl}/r/${code.short_code}`;
-      
-      try {
-        await QRCode.toCanvas(canvas, qrUrl, {
-          width: 200,
-          margin: 2,
-          color: {
-            dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
-            light: config?.colorLight || '#ffffff',
-          },
-          errorCorrectionLevel: 'H',
-        } as any);
-
-        // 应用自定义样式
-        if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
-          const ctx = canvas.getContext('2d');
-          if (!ctx) return;
-
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = canvas.width;
-          tempCanvas.height = canvas.height;
-          const tempCtx = tempCanvas.getContext('2d');
-          if (!tempCtx) return;
-          tempCtx.drawImage(canvas, 0, 0);
-
-          ctx.fillStyle = config?.colorLight || '#ffffff';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-          if (config?.useGradient) {
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, config?.gradientStart || '#6366f1');
-            gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
-            ctx.fillStyle = gradient;
-          } else {
-            ctx.fillStyle = config?.colorDark || '#000000';
-          }
-
-          const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
-          const data = imageData.data;
-          const moduleSize = canvas.width / Math.sqrt(data.length / 4);
-          const moduleCount = Math.round(canvas.width / moduleSize);
-
-          for (let row = 0; row < moduleCount; row++) {
-            for (let col = 0; col < moduleCount; col++) {
-              const x = col * moduleSize;
-              const y = row * moduleSize;
-              const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
-              
-              if (data[idx] < 128) {
-                const size = moduleSize - 1;
-                switch (config?.styleType) {
-                  case 'rounded':
-                    ctx.beginPath();
-                    ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
-                    ctx.fill();
-                    break;
-                  case 'dot':
-                    ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  case 'liquid':
-                    ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  default:
-                    ctx.fillRect(x + 0.5, y + 0.5, size, size);
-                }
-              }
-            }
-          }
-
-          // 添加Logo
-          if (config?.logoImage) {
-            const logo = new Image();
-            logo.crossOrigin = 'anonymous';
-            logo.onload = () => {
-              const logoW = Math.min(config?.logoWidth || 40, 60);
-              const logoH = Math.min(config?.logoHeight || 40, 60);
-              const x = (canvas.width - logoW) / 2;
-              const y = (canvas.height - logoH) / 2;
-
-              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
-                ctx.fillStyle = config.logoBackgroundColor;
-                ctx.beginPath();
-                ctx.roundRect(
-                  x - (config?.logoMargin || 3),
-                  y - (config?.logoMargin || 3),
-                  logoW + (config?.logoMargin || 3) * 2,
-                  logoH + (config?.logoMargin || 3) * 2,
-                  config?.logoCornerRadius || 6
-                );
-                ctx.fill();
-              }
-
-              ctx.drawImage(logo, x, y, logoW, logoH);
-              setIsLoading(false);
-            };
-            logo.src = config.logoImage as string;
-          } else {
-            setIsLoading(false);
-          }
-        } else {
-          setIsLoading(false);
-        }
-      } catch (err) {
-        console.error('QR preview error:', err);
-        setIsLoading(false);
-      }
-    };
-
-    generate();
-  }, [code, baseUrl]);
-
-  return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      marginBottom: '20px',
-      padding: '20px',
-      background: 'rgba(255,255,255,0.05)',
-      borderRadius: '12px'
-    }}>
-      <div style={{ position: 'relative' }}>
-        <canvas
-          ref={canvasRef}
-          width={200}
-          height={200}
-          style={{ 
-            display: isLoading ? 'none' : 'block',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-          }}
-        />
-        {isLoading && (
-          <div style={{
-            width: '200px',
-            height: '200px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(0,0,0,0.2)',
-            borderRadius: '8px',
-            color: '#64748b'
-          }}>
-            加载中...
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default DynamicQR;
