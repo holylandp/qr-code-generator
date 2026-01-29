@@ -1,0 +1,87 @@
+# 宇宙二维码生成器
+
+专业级二维码生成工具，支持活码、自定义样式、Logo 上传，部署于 Vercel，数据存储于 Supabase。
+
+## 功能特点
+
+- ✨ **普通二维码生成** - 支持自定义颜色、样式、添加 Logo
+- 🔄 **活码管理** - 可随时修改跳转地址，二维码图案保持不变
+- 🎨 **多种样式** - 方形、圆角、圆点、液态四种码点样式
+- 🌈 **渐变色支持** - 二维码可使用渐变色
+- 🖼️ **Logo 上传** - 支持上传图片作为二维码中心 Logo
+- 📊 **扫描统计** - 活码支持扫描次数统计
+
+## 技术栈
+
+- **前端**: React + TypeScript + Vite
+- **数据库**: Supabase (PostgreSQL)
+- **部署**: Vercel
+- **二维码生成**: qrcode.js
+
+## 本地开发
+
+### 1. 克隆项目
+
+```bash
+git clone https://github.com/holylandp/qr-code-generator.git
+cd qr-code-generator
+```
+
+### 2. 安装依赖
+
+```bash
+npm install
+```
+
+### 3. 配置环境变量
+
+创建 `.env` 文件：
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 4. 启动开发服务器
+
+```bash
+npm run dev
+```
+
+## 部署
+
+### 部署到 Vercel
+
+1. 在 Vercel 导入 GitHub 仓库
+2. 配置环境变量（同上）
+3. 点击部署
+
+### Supabase 数据库配置
+
+执行以下 SQL 创建表：
+
+```sql
+-- 活码表
+CREATE TABLE dynamic_qr_codes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    short_code TEXT UNIQUE NOT NULL,
+    target_url TEXT NOT NULL,
+    qr_config JSONB DEFAULT '{}'::jsonb,
+    scan_count INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 扫描日志表
+CREATE TABLE qr_scan_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    qr_code_id UUID REFERENCES dynamic_qr_codes(id) ON DELETE CASCADE,
+    ip_address TEXT,
+    user_agent TEXT,
+    scanned_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+## License
+
+MIT

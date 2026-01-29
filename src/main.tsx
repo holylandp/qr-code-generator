@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { RedirectHandler } from './components/RedirectHandler.tsx'
 
+// Check if current path is a redirect URL
 const path = window.location.pathname;
 const isRedirect = path.startsWith('/r/');
 
