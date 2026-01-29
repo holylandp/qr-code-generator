@@ -42,10 +42,11 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
       if (!canvas) return;
       try {
         await QRCode.toCanvas(canvas, config.text || 'https://example.com', {
-          width: config.width, height: config.height, margin: config.margin,
+          width: config.width,
+          margin: config.margin,
           color: { dark: config.useGradient ? '#000000' : config.colorDark, light: config.colorLight },
           errorCorrectionLevel: config.correctLevel,
-        });
+        } as any);
         if (config.useGradient || config.styleType !== 'square' || config.logoImage) {
           const ctx = canvas.getContext('2d');
           if (!ctx) return;
@@ -192,4 +193,4 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
 }
 
 export { defaultConfig };
-export type { QRCodeConfig };
+export default QRGenerator;
