@@ -1,1 +1,639 @@
-aW1wb3J0IHsgdXNlU3RhdGUsIHVzZUVmZmVjdCwgdXNlUmVmIH0gZnJvbSAncmVhY3QnOw0KaW1wb3J0IFFSQ29kZSBmcm9tICdxcmNvZGUnOw0KaW1wb3J0IHsgUVJHZW5lcmF0b3IgfSBmcm9tICcuL1FSR2VuZXJhdG9yJzsNCmltcG9ydCB0eXBlIHsgUVJDb2RlQ29uZmlnIH0gZnJvbSAnLi9RUkdlbmVyYXRvcic7DQppbXBvcnQgew0KICBjcmVhdGVEeW5hbWljUVJDb2RlLA0KICBnZXRBbGxEeW5hbWljUVJDb2RlcywNCiAgdXBkYXRlRHluYW1pY1FSQ29kZVRhcmdldCwNCiAgZGVsZXRlRHluYW1pY1FSQ29kZSwNCiAgdHlwZSBEeW5hbWljUVJDb2RlLA0KfSBmcm9tICcuLi9saWIvc3VwYWJhc2UnOw0KDQpleHBvcnQgZnVuY3Rpb24gRHluYW1pY1FSKCkgew0KICBjb25zdCBbYWN0aXZlVGFiLCBzZXRBY3RpdmVUYWJdID0gdXNlU3RhdGU8J2NyZWF0ZScgfCAnbWFuYWdlJz4oJ2NyZWF0ZScpOw0KICBjb25zdCBbZHluYW1pY0NvZGVzLCBzZXREeW5hbWljQ29kZXNdID0gdXNlU3RhdGU8RHluYW1pY1FSQ29kZVtdPihbXSk7DQogIGNvbnN0IFt0YXJnZXRVcmwsIHNldFRhcmdldFVybF0gPSB1c2VTdGF0ZSgnJyk7DQogIGNvbnN0IFtzZWxlY3RlZENvZGUsIHNldFNlbGVjdGVkQ29kZV0gPSB1c2VTdGF0ZTxEeW5hbWljUVJDb2RlIHwgbnVsbD4obnVsbCk7DQogIGNvbnN0IFtlZGl0VXJsLCBzZXRFZGl0VXJsXSA9IHVzZVN0YXRlKCcnKTsNCiAgY29uc3QgW3Nob3dFZGl0TW9kYWwsIHNldFNob3dFZGl0TW9kYWxdID0gdXNlU3RhdGUoZmFsc2UpOw0KICBjb25zdCBbaXNMb2FkaW5nLCBzZXRJc0xvYWRpbmddID0gdXNlU3RhdGUoZmFsc2UpOw0KICBjb25zdCBbZXJyb3IsIHNldEVycm9yXSA9IHVzZVN0YXRlKCcnKTsNCiAgY29uc3QgW3FyQ29uZmlnLCBzZXRRckNvbmZpZ10gPSB1c2VTdGF0ZTxRUkNvZGVDb25maWc+KHsNCiAgICB0ZXh0OiAnJywNCiAgICB3aWR0aDogMzAwLA0KICAgIGhlaWdodDogMzAwLA0KICAgIGNvbG9yRGFyazogJyMwMDAwMDAnLA0KICAgIGNvbG9yTGlnaHQ6ICcjZmZmZmZmJywNCiAgICBjb3JyZWN0TGV2ZWw6ICdIJywNCiAgICBtYXJnaW46IDIsDQogICAgbG9nb0ltYWdlOiBudWxsLA0KICAgIGxvZ29XaWR0aDogNjAsDQogICAgbG9nb0hlaWdodDogNjAsDQogICAgbG9nb01hcmdpbjogNSwNCiAgICBsb2dvQ29ybmVyUmFkaXVzOiA4LA0KICAgIGxvZ29CYWNrZ3JvdW5kQ29sb3I6ICcjZmZmZmZmJywNCiAgICBzdHlsZVR5cGU6ICdzcXVhcmUnLA0KICAgIGdyYWRpZW50U3RhcnQ6ICcjNjM2NmYxJywNCiAgICBncmFkaWVudEVuZDogJyM4YjVjZjYnLA0KICAgIHVzZUdyYWRpZW50OiBmYWxzZSwNCiAgICBiYWNrZ3JvdW5kSW1hZ2U6IG51bGwsDQogIH0pOw0KDQogIGNvbnN0IGJhc2VVcmwgPSB0eXBlb2Ygd2luZG93ICE9PSAndW5kZWZpbmVkJyA/IHdpbmRvdy5sb2NhdGlvbi5vcmlnaW4gOiAnJzsNCg0KICAvLyDliqDovb3miYDmnInmtLvnoIENCiAgdXNlRWZmZWN0KCgpID0+IHsNCiAgICBsb2FkRHluYW1pY0NvZGVzKCk7DQogIH0sIFtdKTsNCg0KICBjb25zdCBsb2FkRHluYW1pY0NvZGVzID0gYXN5bmMgKCkgPT4gew0KICAgIHNldElzTG9hZGluZyh0cnVlKTsNCiAgICBjb25zdCBjb2RlcyA9IGF3YWl0IGdldEFsbER5bmFtaWNRUkNvZGVzKCk7DQogICAgc2V0RHluYW1pY0NvZGVzKGNvZGVzKTsNCiAgICBzZXRJc0xvYWRpbmcoZmFsc2UpOw0KICB9Ow0KDQogIGNvbnN0IGNyZWF0ZUR5bmFtaWNDb2RlID0gYXN5bmMgKCkgPT4gew0KICAgIGlmICghdGFyZ2V0VXJsLnRyaW0oKSkgew0KICAgICAgc2V0RXJyb3IoJ+ivt+i+k+WFpeebruagh+mTvuaOpeWcsOWdgCcpOw0KICAgICAgcmV0dXJuOw0KICAgIH0NCg0KICAgIC8vIOmqjOivgSBVUkwNCiAgICBsZXQgdmFsaWRVcmwgPSB0YXJnZXRVcmw7DQogICAgaWYgKCEvXmh0dHBzPzpcL1wvL2kudGVzdCh2YWxpZFVybCkpIHsNCiAgICAgIHZhbGlkVXJsID0gJ2h0dHBzOi8vJyArIHZhbGlkVXJsOw0KICAgIH0NCg0KICAgIHNldElzTG9hZGluZyh0cnVlKTsNCiAgICBzZXRFcnJvcignJyk7DQoNCiAgICBjb25zdCBuZXdDb2RlID0gYXdhaXQgY3JlYXRlRHluYW1pY1FSQ29kZSh2YWxpZFVybCwgcXJDb25maWcpOw0KDQogICAgaWYgKG5ld0NvZGUpIHsNCiAgICAgIHNldER5bmFtaWNDb2RlcygocHJldikgPT4gW25ld0NvZGUsIC4uLnByZXZdKTsNCiAgICAgIHNldFRhcmdldFVybCgnJyk7DQogICAgICBzZXRBY3RpdmVUYWIoJ21hbmFnZScpOw0KICAgICAgYWxlcnQoJ+a0u+eggeWIm+W7uuaIkOWKn++8gScpOw0KICAgIH0gZWxzZSB7DQogICAgICBzZXRFcnJvcign5Yib5bu65aSx6LSl77yM6K+36YeN6K+VJyk7DQogICAgfQ0KDQogICAgc2V0SXNMb2FkaW5nKGZhbHNlKTsNCiAgfTsNCg0KICBjb25zdCB1cGRhdGVUYXJnZXRVcmwgPSBhc3luYyAoKSA9PiB7DQogICAgaWYgKCFzZWxlY3RlZENvZGUgfHwgIWVkaXRVcmwudHJpbSgpKSByZXR1cm47DQoNCiAgICAvLyDpqozor4EgVVJMDQogICAgbGV0IHZhbGlkVXJsID0gZWRpdFVybDsNCiAgICBpZiAoIS9eaHR0cHM/OlwvXC8vaS50ZXN0KHZhbGlkVXJsKSkgew0KICAgICAgdmFsaWRVcmwgPSAnaHR0cHM6Ly8nICsgdmFsaWRVcmw7DQogICAgfQ0KDQogICAgc2V0SXNMb2FkaW5nKHRydWUpOw0KICAgIGNvbnN0IHN1Y2Nlc3MgPSBhd2FpdCB1cGRhdGVEeW5hbWljUVJDb2RlVGFyZ2V0KHNlbGVjdGVkQ29kZS5pZCwgdmFsaWRVcmwgYXMgc3RyaW5nKTsNCg0KICAgIGlmIChzdWNjZXNzKSB7DQogICAgICBzZXREeW5hbWljQ29kZXMoKHByZXYpID0+DQogICAgICAgIHByZXYubWFwKChjb2RlKSA9Pg0KICAgICAgICAgIGNvZGUuaWQgPT09IHNlbGVjdGVkQ29kZS5pZA0KICAgICAgICAgICAgPyB7IC4uLmNvZGUsIHRhcmdldF91cmw6IHZhbGlkVXJsIGFzIHN0cmluZywgdXBkYXRlZF9hdDogbmV3IERhdGUoKS50b0lTT1N0cmluZygpIH0NCiAgICAgICAgICAgIDogY29kZQ0KICAgICAgICApDQogICAgICApOw0KICAgICAgc2V0U2hvd0VkaXRNb2RhbChmYWxzZSk7DQogICAgICBzZXRTZWxlY3RlZENvZGUobnVsbCk7DQogICAgICBzZXRFZGl0VXJsKCcnKTsNCiAgICAgIGFsZXJ0KCfpk77mjqXlnLDlnYDmm7TmlrDmiJDlip/vvIEnKTsNCiAgICB9IGVsc2Ugew0KICAgICAgYWxlcnQoJ+abtOaWsOWksei0pe+8jOivt+mHjeivlScpOw0KICAgIH0NCg0KICAgIHNldElzTG9hZGluZyhmYWxzZSk7DQogIH07DQoNCiAgY29uc3QgZGVsZXRlQ29kZSA9IGFzeW5jIChpZDogc3RyaW5nKSA9PiB7DQogICAgaWYgKCFjb25maXJtKCfnoa7lrpropoHliKDpmaTov5nkuKrmtLvnoIHlkJfvvJ/mraTmk43kvZzkuI3lj6/mgaLlpI3jgIInKSkgcmV0dXJuOw0KDQogICAgc2V0SXNMb2FkaW5nKHRydWUpOw0KICAgIGNvbnN0IHN1Y2Nlc3MgPSBhd2FpdCBkZWxldGVEeW5hbWljUVJDb2RlKGlkKTsNCg0KICAgIGlmIChzdWNjZXNzKSB7DQogICAgICBzZXREeW5hbWljQ29kZXMoKHByZXYpID0+IHByZXYuZmlsdGVyKChjb2RlKSA9PiBjb2RlLmlkICE9PSBpZCkpOw0KICAgIH0gZWxzZSB7DQogICAgICBhbGVydCgn5Yig6Zmk5aSx6LSl77yM6K+36YeN6K+VJyk7DQogICAgfQ0KDQogICAgc2V0SXNMb2FkaW5nKGZhbHNlKTsNCiAgfTsNCg0KICBjb25zdCBjb3B5VG9DbGlwYm9hcmQgPSBhc3luYyAodGV4dDogc3RyaW5nKSA9PiB7DQogICAgdHJ5IHsNCiAgICAgIGF3YWl0IG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0KHRleHQpOw0KICAgICAgYWxlcnQoJ+W3suWkjeWItuWIsOWJqui0tOadv++8gScpOw0KICAgIH0gY2F0Y2ggew0KICAgICAgYWxlcnQoJ+WkjeWItuWksei0pScpOw0KICAgIH0NCiAgfTsNCg0KICBjb25zdCBmb3JtYXREYXRlID0gKHRpbWVzdGFtcDogc3RyaW5nKSA9PiB7DQogICAgcmV0dXJuIG5ldyBEYXRlKHRpbWVzdGFtcCkudG9Mb2NhbGVTdHJpbmcoJ3poLUNOJywge0AeFgtbnVtZXJpYycsDQogICAgICBtb250aDogJzItZGlnaXQnLA0KICAgICAgZGF5OiAnMi1kaWdpdCcsDQogICAgICBob3VyOiAnMi1kaWdpdCcsDQogICAgICBtaW51dGU6ICcyLWRpZ2l0JywNCiAgICB9KTsNCiAgfTsNCg0KICAvLyDnlJ/miJDmtLvnoIHkuoznu7TnoIHlm77niYcNCiAgY29uc3QgZ2VuZXJhdGVRUkNvZGVJbWFnZSA9IGFzeW5jIChjb2RlOiBEeW5hbWljUVJDb2RlKTogUHJvbWlzZTxzdHJpbmc+ID0+IHsNCiAgICBjb25zdCBjYW52YXMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdjYW52YXMnKTsNCiAgICBjb25zdCBjb25maWcgPSBjb2RlLnFyX2NvbmZpZyBhcyBRUkNvZGVDb25maWc7DQogICAgY29uc3QgcXJVcmwgPSBgJHtiYXNlVXJsfS9yLyR7Y29kZS5zaG9ydF9jb2RlfWA7DQogICAgDQogICAgdHJ5IHsNCiAgICAgIGF3YWl0IFFSQ29kZS50b0NhbnZhcyhjYW52YXMsIHFyVXJsLCB7DQogICAgICAgIHdpZHRoOiBjb25maWc/LndpZHRoIHx8IDMwMCwNCiAgICAgICAgbWFyZ2luOiBjb25maWc/Lm1hcmdpbiB8fCAyLA0KICAgICAgICBjb2xvcjogew0KICAgICAgICAgIGRhcms6IGNvbmZpZz8udXNlR3JhZGllbnQgPyAnIzAwMDAwMCcgOiAoY29uZmlnPy5jb2xvckRhcmsgfHwgJyMwMDAwMDAnKSwNCiAgICAgICAgICBsaWdodDogY29uZmlnPy5jb2xvckxpZ2h0IHx8ICcjZmZmZmZmJywNCiAgICAgICAgfSwNCiAgICAgICAgZXJyb3JDb3JyZWN0aW9uTGV2ZWw6IGNvbmZpZz8uY29ycmVjdExldmVsIHx8ICdIJywNCiAgICAgIH0gYXMgYW55KTsNCg0KICAgICAgLy8g5bqU55So6Ieq5a6a5LmJ5qC35byPDQogICAgICBpZiAoY29uZmlnPy51c2VHcmFkaWVudCB8fCBjb25maWc/LnN0eWxlVHlwZSAhPT0gJ3NxdWFyZScgfHwgY29uZmlnPy5sb2dvSW1hZ2UpIHsNCiAgICAgICAgY29uc3QgY3R4ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7DQogICAgICAgIGlmICghY3R4KSByZXR1cm4gY2FudmFzLnRvRGF0YVVSTCgnaW1hZ2UvcG5nJyk7DQoNCiAgICAgICAgY29uc3QgdGVtcENhbnZhcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpOw0KICAgICAgICB0ZW1wQ2FudmFzLndpZHRoID0gY2FudmFzLndpZHRoOw0KICAgICAgICB0ZW1wQ2FudmFzLmhlaWdodCA9IGNhbnZhcy5oZWlnaHQ7DQogICAgICAgIGNvbnN0IHRlbXBDdHggPSB0ZW1wQ2FudmFzLmdldENvbnRleHQoJzJkJyk7DQogICAgICAgIGlmICghdGVtcEN0eCkgcmV0dXJuIGNhbnZhcy50b0RhdGFVUkwoJ2ltYWdlL3BuZycpOw0KICAgICAgICB0ZW1wQ3R4LmRyYXdJbWFnZShjYW52YXMsIDAsIDApOw0KDQogICAgICAgIGN0eC5maWxsU3R5bGUgPSBjb25maWc/LmNvbG9yTGlnaHQgfHwgJyNmZmZmZmYnOw0KICAgICAgICBjdHguZmlsbFJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsNCg0KICAgICAgICBpZiAoY29uZmlnPy51c2VHcmFkaWVudCkgew0KICAgICAgICAgIGNvbnN0IGdyYWRpZW50ID0gY3R4LmNyZWF0ZUxpbmVhckdyYWRpZW50KDAsIDAsIGNhbnZhcy53aWR0aCwgY2FudmFzLmhlaWdodCk7DQogICAgICAgICAgZ3JhZGllbnQuYWRkQ29sb3JTdG9wKDAsIGNvbmZpZz8uZ3JhZGllbnRTdGFydCB8fCAnIzYzNjZmMScpOw0KICAgICAgICAgIGdyYWRpZW50LmFkZENvbG9yU3RvcCgxLCBjb25maWc/LmdyYWRpZW50RW5kIHx8ICcjOGI1Y2Y2Jyk7DQogICAgICAgICAgY3R4LmZpbGxTdHlsZSA9IGdyYWRpZW50Ow0KICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgIGN0eC5maWxsU3R5bGUgPSBjb25maWc/LmNvbG9yRGFyayB8fCAnIzAwMDAwMCc7DQogICAgICAgIH0NCg0KICAgICAgICBjb25zdCBpbWFnZURhdGEgPSB0ZW1wQ3R4LmdldEltYWdlRGF0YSgwLCAwLCBjYW52YXMud2lkdGgsIGNhbnZhcy5oZWlnaHQpOw0KICAgICAgICBjb25zdCBkYXRhID0gaW1hZ2VEYXRhLmRhdGE7DQogICAgICAgIGNvbnN0IG1vZHVsZVNpemUgPSBjYW52YXMud2lkdGggLyBNYXRoLnNxcnQoZGF0YS5sZW5ndGggLyA0KTsNCiAgICAgICAgY29uc3QgbW9kdWxlQ291bnQgPSBNYXRoLnJvdW5kKGNhbnZhcy53aWR0aCAvIG1vZHVsZVNpemUpOw0KDQogICAgICAgIGZvciAobGV0IHJvdyA9IDA7IHJvdyA8IG1vZHVsZUNvdW50OyByb3crKykgew0KICAgICAgICAgIGZvciAobGV0IGNvbCA9IDA7IGNvbCA8IG1vZHVsZUNvdW50OyBjb2wrKykgew0KICAgICAgICAgICAgY29uc3QgeCA9IGNvbCAqIG1vZHVsZVNpemU7DQogICAgICAgICAgICBjb25zdCB5ID0gcm93ICogbW9kdWxlU2l6ZTsNCiAgICAgICAgICAgIGNvbnN0IGlkeCA9IChNYXRoLmZsb29yKHkgKyBtb2R1bGVTaXplLzIpICogY2FudmFzLndpZHRoICsgTWF0aC5mbG9vcih4ICsgbW9kdWxlU2l6ZS8yKSkgKiA0Ow0KICAgICAgICAgICAgDQogICAgICAgICAgICBpZiAoZGF0YVtpZHhdIDwgMTI4KSB7DQogICAgICAgICAgICAgIGNvbnN0IHNpemUgPSBtb2R1bGVTaXplIC0gMTsNCiAgICAgICAgICAgICAgc3dpdGNoIChjb25maWc/LnN0eWxlVHlwZSkgew0KICAgICAgICAgICAgICAgIGNhc2UgJ3JvdW5kZWQnOg0KICAgICAgICAgICAgICAgICAgY3R4LmJlZ2luUGF0aCgpOw0KICAgICAgICAgICAgICAgICAgY3R4LnJvdW5kUmVjdCh4ICsgMC41LCB5ICsgMC41LCBzaXplLCBzaXplLCBzaXplICogMC4zKTsNCiAgICAgICAgICAgICAgICAgIGN0eC5maWxsKCk7DQogICAgICAgICAgICAgICAgICBicmVhazsNCiAgICAgICAgICAgICAgICBjYXNlICdkb3QnOg0KICAgICAgICAgICAgICAgICAgY3R4LmJlZ2luUGF0aCgpOw0KICAgICAgICAgICAgICAgICAgY3R4LmFyYyh4ICsgbW9kdWxlU2l6ZSAvIDIsIHkgKyBtb2R1bGVTaXplIC8gMiwgc2l6ZSAqIDAuNCwgMCwgTWF0aC5QSSAqIDIpOw0KICAgICAgICAgICAgICAgICAgY3R4LmZpbGwoKTsNCiAgICAgICAgICAgICAgICAgIGJyZWFrOw0KICAgICAgICAgICAgICAgIGNhc2UgJ2xpcXVpZCc6DQogICAgICAgICAgICAgICAgICBjdHguYmVnaW5QYXRoKCk7DQogICAgICAgICAgICAgICAgICBjdHguYXJjKHggKyBtb2R1bGVTaXplIC8gMiwgeSArIG1vZHVsZVNpemUgLyAyLCBzaXplICogMC40NSwgMCwgTWF0aC5QSSAqIDIpOw0KICAgICAgICAgICAgICAgICAgY3R4LmZpbGwoKTsNCiAgICAgICAgICAgICAgICAgIGJyZWFrOw0KICAgICAgICAgICAgICAgIGRlZmF1bHQ6DQogICAgICAgICAgICAgICAgICBjdHguZmlsbFJlY3QoeCArIDAuNSwgeSArIDAuNSwgc2l6ZSwgc2l6ZSk7DQogICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIH0NCiAgICAgICAgICB9DQogICAgICAgIH0NCg0KICAgICAgICAvLyDmt7vliqBMb2dvDQogICAgICAgIGlmIChjb25maWc/LmxvZ29JbWFnZSkgew0KICAgICAgICAgIGNvbnN0IGxvZ28gPSBuZXcgSW1hZ2UoKTsNCiAgICAgICAgICBsb2dvLmNyb3NzT3JpZ2luID0gJ2Fub255bW91cyc7DQogICAgICAgICAgYXdhaXQgbmV3IFByb21pc2U8dm9pZD4oKHJlc29sdmUpID0+IHsNCiAgICAgICAgICAgIGxvZ28ub25sb2FkID0gKCkgPT4gew0KICAgICAgICAgICAgICBjb25zdCBsb2dvVyA9IGNvbmZpZz8ubG9nb1dpZHRoIHx8IDYwOw0KICAgICAgICAgICAgICBjb25zdCBsb2dvSCA9IGNvbmZpZz8ubG9nb0hlaWdodCB8fCA2MDsNCiAgICAgICAgICAgICAgY29uc3QgeCA9IChjYW52YXMud2lkdGggLSBsb2dvVykgLyAyOw0KICAgICAgICAgICAgICBjb25zdCB5ID0gKGNhbnZhcy5oZWlnaHQgLSBsb2dvSCkgLyAyOw0KDQogICAgICAgICAgICAgIGlmIChjb25maWc/LmxvZ29CYWNrZ3JvdW5kQ29sb3IgJiYgY29uZmlnPy5sb2dvQmFja2dyb3VuZENvbG9yICE9PSAndHJhbnNwYXJlbnQnKSB7DQogICAgICAgICAgICAgICAgY3R4LmZpbGxTdHlsZSA9IGNvbmZpZy5sb2dvQmFja2dyb3VuZENvbG9yOw0KICAgICAgICAgICAgICAgIGN0eC5iZWdpblBhdGgoKTsNCiAgICAgICAgICAgICAgICBjdHgucm91bmRSZWN0KA0KICAgICAgICAgICAgICAgICAgeCAtIChjb25maWc/LmxvZ29NYXJnaW4gfHwgNSksDQogICAgICAgICAgICAgICAgICB5IC0gKGNvbmZpZz8ubG9nb01hcmdpbiB8fCA1KSwNCiAgICAgICAgICAgICAgICAgIGxvZ29XICsgKGNvbmZpZz8ubG9nb01hcmdpbiB8fCA1KSAqIDIsDQogICAgICAgICAgICAgICAgICBsb2dvSCArIChjb25maWc/LmxvZ29NYXJnaW4gfHwgNSkgKiAyLA0KICAgICAgICAgICAgICAgICAgY29uZmlnPy5sb2dvQ29ybmVyUmFkaXVzIHx8IDgNCiAgICAgICAgICAgICAgICApOw0KICAgICAgICAgICAgICAgIGN0eC5maWxsKCk7DQogICAgICAgICAgICAgIH0NCg0KICAgICAgICAgICAgICBjdHguZHJhd0ltYWdlKGxvZ28sIHgsIHksIGxvZ29XLCBsb2dvSCk7DQogICAgICAgICAgICAgIHJlc29sdmUoKTsNCiAgICAgICAgICAgIH07DQogICAgICAgICAgICBsb2dvLnNyYyA9IGNvbmZpZy5sb2dvSW1hZ2U7DQogICAgICAgICAgfSk7DQogICAgICAgIH0NCiAgICAgIH0NCg0KICAgICAgcmV0dXJuIGNhbnZhcy50b0RhdGFVUkwoJ2ltYWdlL3BuZycpOw0KICAgIH0gY2F0Y2ggKGVycikgew0KICAgICAgY29uc29sZS5lcnJvcignUVIgZ2VuZXJhdGlvbiBlcnJvcjonLCBlcnIpOw0KICAgICAgcmV0dXJuICcnOw0KICAgIH0NCiAgfTsNCg0KICAvLyDkuIvovb3mtLvnoIHkuoznu7TnoIENcbiAgY29uc3QgZG93bmxvYWRRUkNvZGUgPSBhc3luYyAoY29kZTogRHluYW1pY1FSQ29kZSkgPT4gew0KICAgIGNvbnN0IGRhdGFVcmwgPSBhd2FpdCBnZW5lcmF0ZVFSQ29kZUltYWdlKGNvZGUpOw0KICAgIGlmICghZGF0YVVybCkgew0KICAgICAgYWxlcnQoJ+eUn+aIkOS6jOe7tOeggWUnKTsNCiAgICAgIHJldHVybjsNCiAgICB9DQogICAgY29uc3QgbGluayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2EnKTsNCiAgICBsaW5rLmRvd25sb2FkID0gYHFyY29kZS0ke2NvZGUuc2hvcnRfY29kZX0ucG5nYDsNCiAgICBsaW5rLmhyZWYgPSBkYXRhVXJsOw0KICAgIGxpbmsuY2xpY2soKTsNCiAgfTsNCg0KICByZXR1cm4gKA0KICAgIDxkaXYgY2xhc3NOYW1lPSJkeW5hbWljLXFyLWNvbnRhaW5lciI+DQogICAgICB7LyogVGFiIE5hdmlnYXRpb24gKi99DQogICAgICA8ZGl2IGNsYXNzTmFtZT0idGFiLW5hdmlnYXRpb24iPg0KICAgICAgICA8YnV0dG9uDQogICAgICAgICAgY2xhc3NOYW1lPXthY3RpdmVUYWIgPT09ICdjcmVhdGUnID8gJ2FjdGl2ZScgOiAnJ30NCiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRBY3RpdmVUYWIoJ2NyZWF0ZScpfQ0KICAgICAgICA+DQogICAgICAgICAg5Yib5bu65rS756CBDQogICAgICAgIDwvYnV0dG9uPg0KICAgICAgICA8YnV0dG9uDQogICAgICAgICAgY2xhc3NOYW1lPXthY3RpdmVUYWIgPT09ICdtYW5hZ2UnID8gJ2FjdGl2ZScgOiAnJ30NCiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRBY3RpdmVUYWIoJ21hbmFnZScpfQ0KICAgICAgICA+DQogICAgICAgICAg566h55CG5rS756CBICh7ZHluYW1pY0NvZGVzLmxlbmd0aH0pDQogICAgICAgIDwvYnV0dG9uPg0KICAgICAgPC9kaXY+DQoNCiAgICAgIHsvKiBDcmVhdGUgVGFiICovfQ0KICAgICAge2FjdGl2ZVRhYiA9PT0gJ2NyZWF0ZScgJiYgKA0KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iY3JlYXRlLXNlY3Rpb24iPg0KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJjcmVhdGUtZm9ybSI+DQogICAgICAgICAgICB7ZXJyb3IgJiYgKA0KICAgICAgICAgICAgICA8ZGl2IHN0eWxlPXt7IGNvbG9yOiAnI2VmNDQ0NCcsIG1hcmdpbkJvdHRvbTogJzE1cHgnLCBwYWRkaW5nOiAnMTBweCcsIGJhY2tncm91bmQ6ICdyZ2JhKDIzOSwgNjgsIDY4LCAwLjEpJywgYm9yZGVyUmFkaXVzOiAnOHB4JyB9fT4NCiAgICAgICAgICAgICAgICB7ZXJyb3J9DQogICAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgKX0NCiAgICAgICAgICAgIA0KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InFyLWN1c3RvbWl6YXRpb24iPg0KICAgICAgICAgICAgICA8aDM+6YWN572u5rS756CBPC9oMz4NCiAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJmb3JtLWhpbnQiIHN0eWxlPXt7IG1hcmdpbkJvdHRvbTogJzIwcHgnLCBjb2xvcjogJyM2NDc0OGInIH19Pg0KICAgICAgICAgICAgICAgIOWcqOS4i+aWuei+k+WFpeebruagh+mTvuaOpeWcsOWdgO+8jOa0u+eggeWIm+W7uuWQjuWPr+maj+aXtuS/ruaUuemTvuaOpeiAjOS6jOe7tOeggeWbvuahiOS4jeWPmA0KICAgICAgICAgICAgICA8L3A+DQogICAgICAgICAgICAgIDxRUkdlbmVyYXRvcg0KICAgICAgICAgICAgICAgIGNvbmZpZz17eyAuLi5xckNvbmZpZywgdGV4dDogdGFyZ2V0VXJsIH19DQogICAgICAgICAgICAgICAgb25Db25maWdDaGFuZ2U9eyhjb25maWcpID0+IHsNCiAgICAgICAgICAgICAgICAgIHNldFFyQ29uZmlnKGNvbmZpZyk7DQogICAgICAgICAgICAgICAgICBzZXRUYXJnZXRVcmwoY29uZmlnLnRleHQpOw0KICAgICAgICAgICAgICAgIH19DQogICAgICAgICAgICAgIC8+DQogICAgICAgICAgICA8L2Rpdj4NCg0KICAgICAgICAgICAgPGJ1dHRvbiANCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJjcmVhdGUtYnRuIiANCiAgICAgICAgICAgICAgb25DbGljaz17Y3JlYXRlRHluYW1pY0NvZGV9DQogICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9DQogICAgICAgICAgICA+DQogICAgICAgICAgICAgIHtpc0xvYWRpbmcgPyAn5Yib5bu65LitLi4uJyA6ICfliJvlu7rmtLvnoIEnfQ0KICAgICAgICAgICAgPC9idXR0b24+DQogICAgICAgICAgPC9kaXY+DQogICAgICAgIDwvZGl2Pg0KICAgICAgKX0NCg0KICAgICAgey8qIE1hbmFnZSBUYWIgKi99DQogICAgICB7YWN0aXZlVGFiID09PSAnbWFuYWdlJyAmJiAoDQogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtYW5hZ2Utc2VjdGlvbiI+DQogICAgICAgICAge2lzTG9hZGluZyA/ICgNCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJlbXB0eS1zdGF0ZSI+DQogICAgICAgICAgICAgIDxwPuWKoOi9veS4rS4uLjwvcD4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICkgOiBkeW5hbWljQ29kZXMubGVuZ3RoID09PSAwID8gKA0KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImVtcHR5LXN0YXRlIj4NCiAgICAgICAgICAgICAgPHA+5pqC5peg5rS756CBPC9wPg0KICAgICAgICAgICAgICA8YnV0dG9uIG9uQ2xpY2s9eygpID0+IHNldEFjdGl2ZVRhYignY3JlYXRlJyl9PuWIm+W7uuesrOS4gOS4qua0u+eggTwvYnV0dG9uPg0KICAgICAgICAgICAgPC9kaXY+DQogICAgICAgICAgKSA6ICgNCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJjb2Rlcy1saXN0Ij4NCiAgICAgICAgICAgICAge2R5bmFtaWNDb2Rlcy5tYXAoKGNvZGUpID0+ICgNCiAgICAgICAgICAgICAgICA8ZGl2IGtleT17Y29kZS5pZH0gY2xhc3NOYW1lPSJjb2RlLWNhcmQiPg0KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImNvZGUtaW5mbyI+DQogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJjb2RlLWhlYWRlciI+DQogICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJzaG9ydC1jb2RlIj57Y29kZS5zaG9ydF9jb2RlfTwvc3Bhbj4NCiAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InNjYW4tY291bnQiPg0KICAgICAgICAgICAgICAgICAgICAgICAg5omr5o+P5qyh5pWwOiB7Y29kZS5zY2FuX2NvdW50fQ0KICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4NCiAgICAgICAgICAgICAgICAgICAgPC9kaXY+DQoNCiAgICAgICAgICAgICAgICAgICAgey8qIOa0u+eggeS6jOe7tOeggemihOiniCAqL30NCiAgICAgICAgICAgICAgICAgICAgPER5bmFtaWNRUlByZXZpZXcgY29kZT17Y29kZX0gYmFzZVVybD17YmFzZVVybH0gLz4NCiAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ1cmwtc2VjdGlvbiI+DQogICAgICAgICAgICAgICAgICAgICAgPGxhYmVsPui3s+i9rOmTvuaOpTo8L2xhYmVsPg0KICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ1cmwtcm93Ij4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxpbnB1dA0KICAgICAgICAgICAgICAgICAgICAgICAgICB0eXBlPSJ0ZXh0Ig0KICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17Y29kZS50YXJnZXRfdXJsfQ0KICAgICAgICAgICAgICAgICAgICAgICAgICByZWFkT25seQ0KICAgICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InVybC1pbnB1dCINCiAgICAgICAgICAgICAgICAgICAgICAgIC8+DQogICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uDQogICAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IGNvcHlUb0NsaXBib2FyZChjb2RlLnRhcmdldF91cmwpfQ0KICAgICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9Imljb24tYnRuIg0KICAgICAgICAgICAgICAgICAgICAgICAgPg0KICAgICAgICAgICAgICAgICAgICAgICAgICDlpI3liLYNCiAgICAgICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPg0KICAgICAgICAgICAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgICAgICAgICA8L2Rpdj4NCg0KICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idXJsLXNlY3Rpb24iPg0KICAgICAgICAgICAgICAgICAgICAgIDxsYWJlbD7mtLvnoIHpk77mjqU6PC9sYWJlbD4NCiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idXJsLXJvdyI+DQogICAgICAgICAgICAgICAgICAgICAgICA8aW5wdXQNCiAgICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT0idGV4dCINCiAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e2Ake2Jhc2VVcmx9L3IvJHtjb2RlLnNob3J0X2NvZGV9YH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgcmVhZE9ubHkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ1cmwtaW5wdXQiDQogICAgICAgICAgICAgICAgICAgICAgICAvPg0KICAgICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbg0KICAgICAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBjb3B5VG9DbGlwYm9hcmQoYCR7YmFzZVVybH0vci8ke2NvZGUuc2hvcnRfY29kZX1gKX0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJpY29uLWJ0biINCiAgICAgICAgICAgICAgICAgICAgICAgID4NCiAgICAgICAgICAgICAgICAgICAgICAgICAg5aSN5Yi2DQogICAgICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4NCiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4NCiAgICAgICAgICAgICAgICAgICAgPC9kaXY+DQoNCiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImNvZGUtbWV0YSI+DQogICAgICAgICAgICAgICAgICAgICAgPHNwYW4+5Yib5bu65LqOOiB7Zm9ybWF0RGF0ZShjb2RlLmNyZWF0ZWRfYXQpfTwvc3Bhbj4NCiAgICAgICAgICAgICAgICAgICAgPC9kaXY+DQogICAgICAgICAgICAgICAgICA8L2Rpdj4NCg0KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImNvZGUtYWN0aW9ucyI+DQogICAgICAgICAgICAgICAgICAgIDxidXR0b24NCiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBkb3dubG9hZFFSQ29kZShjb2RlKX0NCiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImRvd25sb2FkLWJ0biINCiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17ew0KICAgICAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogJzEwcHggMjBweCcsDQogICAgICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiAnbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzEwYjk4MSwgIzA1OTY2OSknLA0KICAgICAgICAgICAgICAgICAgICAgICAgYm9yZGVyOiAnbm9uZScsDQogICAgICAgICAgICAgICAgICAgICAgICBib3JkZXJSYWRpdXM6ICc4cHgnLA0KICAgICAgICAgICAgICAgICAgICAgICAgY29sb3I6ICcjZmZmJywNCiAgICAgICAgICAgICAgICAgICAgICAgIGZvbnRTaXplOiAnMC45cmVtJywNCiAgICAgICAgICAgICAgICAgICAgICAgIGN1cnNvcjogJ3BvaW50ZXInLA0KICAgICAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogJ2FsbCAwLjJzIGVhc2UnDQogICAgICAgICAgICAgICAgICAgICAgfX0NCiAgICAgICAgICAgICAgICAgICAgPg0KICAgICAgICAgICAgICAgICAgICAgIOS4i+i9veS6jOe7tOeggQ0KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4NCiAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbg0KICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHsNCiAgICAgICAgICAgICAgICAgICAgICAgIHNldFNlbGVjdGVkQ29kZShjb2RlKTsNCiAgICAgICAgICAgICAgICAgICAgICAgIHNldEVkaXRVcmwoY29kZS50YXJnZXRfdXJsKTsNCiAgICAgICAgICAgICAgICAgICAgICAgIHNldFNob3dFZGl0TW9kYWwodHJ1ZSk7DQogICAgICAgICAgICAgICAgICAgICAgfX0NCiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImVkaXQtYnRuIg0KICAgICAgICAgICAgICAgICAgICA+DQogICAgICAgICAgICAgICAgICAgICAg5L+u5pS55Zyw5Z2ADQogICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPg0KICAgICAgICAgICAgICAgICAgICA8YnV0dG9uDQogICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gZGVsZXRlQ29kZShjb2RlLmlkKX0NCiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImRlbGV0ZS1idG4iDQogICAgICAgICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ30NCiAgICAgICAgICAgICAgICAgICAgPg0KICAgICAgICAgICAgICAgICAgICAgIOWIoOmZpA0KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4NCiAgICAgICAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgICApKX0NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICl9DQogICAgICAgIDwvZGl2Pg0KICAgICAgKX0NCg0KICAgICAgey8qIEVkaXQgTW9kYWwgKi99DQogICAgICB7c2hvd0VkaXRNb2RhbCAmJiBzZWxlY3RlZENvZGUgJiYgKA0KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibW9kYWwtb3ZlcmxheSIgb25DbGljaz17KCkgPT4gc2V0U2hvd0VkaXRNb2RhbChmYWxzZSl9Pg0KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtb2RhbC1jb250ZW50IiBvbkNsaWNrPXsoZSkgPT4gZS5zdG9wUHJvcGFnYXRpb24oKX0+DQogICAgICAgICAgICA8aDM+5L+u5pS56Lez6L2s5Zyw5Z2APC9oMz4NCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmb3JtLWdyb3VwIj4NCiAgICAgICAgICAgICAgPGxhYmVsPuaWsOeahOebruagh+mTvuaOpTwvbGFiZWw+DQogICAgICAgICAgICAgIDxpbnB1dA0KICAgICAgICAgICAgICAgIHR5cGU9InRleHQiDQogICAgICAgICAgICAgICAgdmFsdWU9e2VkaXRVcmx9DQogICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRFZGl0VXJsKGUudGFyZ2V0LnZhbHVlKX0NCiAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj0iaHR0cHM6Ly9leGFtcGxlLmNvbSINCiAgICAgICAgICAgICAgLz4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Im1vZGFsLWFjdGlvbnMiPg0KICAgICAgICAgICAgICA8YnV0dG9uIG9uQ2xpY2s9eygpID0+IHNldFNob3dFZGl0TW9kYWwoZmFsc2UpfT7lj5bmtog8L2J1dHRvbj4NCiAgICAgICAgICAgICAgPGJ1dHRvbiANCiAgICAgICAgICAgICAgICBvbkNsaWNrPXt1cGRhdGVUYXJnZXRVcmx9IA0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iY29uZmlybS1idG4iDQogICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ30NCiAgICAgICAgICAgICAgPg0KICAgICAgICAgICAgICAgIHtpc0xvYWRpbmcgPyAn5L+d5a2Y5LitLi4uJyA6ICfnoa7orqTkv67mlLknfQ0KICAgICAgICAgICAgICA8L2J1dHRvbj4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgIDwvZGl2Pg0KICAgICAgICA8L2Rpdj4NCiAgICAgICl9DQogICAgPC9kaXY+DQogICk7DQp9DQoNCi8vIOa0u+eggeS6jOe7tOeggemihOiniOe7hOS7tg0KZnVuY3Rpb24gRHluYW1pY1FSUHJldmlldyh7IGNvZGUsIGJhc2VVcmwgfTogeyBjb2RlOiBEeW5hbWljUVJDb2RlOyBiYXNlVXJsOiBzdHJpbmcgfSkgew0KICBjb25zdCBjYW52YXNSZWYgPSB1c2VSZWY8SFRNTENhbnZhc0VsZW1lbnQ+KG51bGwpOw0KICBjb25zdCBbaXNMb2FkaW5nLCBzZXRJc0xvYWRpbmddID0gdXNlU3RhdGUodHJ1ZSk7DQoNCiAgdXNlRWZmZWN0KCgpID0+IHsNCiAgICBjb25zdCBnZW5lcmF0ZSA9IGFzeW5jICgpID0+IHsNCiAgICAgIGNvbnN0IGNhbnZhcyA9IGNhbnZhc1JlZi5jdXJyZW50Ow0KICAgICAgaWYgKCFjYW52YXMpIHJldHVybjsNCiAgICAgIA0KICAgICAgY29uc3QgY29uZmlnID0gY29kZS5xcl9jb25maWcgYXMgUVJDb2RlQ29uZmlnOw0KICAgICAgY29uc3QgcXJVcmwgPSBgJHtiYXNlVXJsfS9yLyR7Y29kZS5zaG9ydF9jb2RlfWA7DQogICAgICANCiAgICAgIHRyeSB7DQogICAgICAgIGF3YWl0IFFSQ29kZS50b0NhbnZhcyhjYW52YXMsIHFyVXJsLCB7DQogICAgICAgICAgd2lkdGg6IDIwMCwNCiAgICAgICAgICBtYXJnaW46IDIsDQogICAgICAgICAgY29sb3I6IHsNCiAgICAgICAgICAgIGRhcms6IGNvbmZpZz8udXNlR3JhZGllbnQgPyAnIzAwMDAwMCcgOiAoY29uZmlnPy5jb2xvckRhcmsgfHwgJyMwMDAwMDAnKSwNCiAgICAgICAgICAgIGxpZ2h0OiBjb25maWc/LmNvbG9yTGlnaHQgfHwgJyNmZmZmZmYnLA0KICAgICAgICAgIH0sDQogICAgICAgICAgZXJyb3JDb3JyZWN0aW9uTGV2ZWw6ICdIJywNCiAgICAgICAgfSBhcyBhbnkpOw0KDQogICAgICAgIC8vIOW6lOeUqOiHquWumuS5ieagt+W8jw0KICAgICAgICBpZiAoY29uZmlnPy51c2VHcmFkaWVudCB8fCBjb25maWc/LnN0eWxlVHlwZSAhPT0gJ3NxdWFyZScgfHwgY29uZmlnPy5sb2dvSW1hZ2UpIHsNCiAgICAgICAgICBjb25zdCBjdHggPSBjYW52YXMuZ2V0Q29udGV4dCgnMmQnKTsNCiAgICAgICAgICBpZiAoIWN0eCkgcmV0dXJuOw0KDQogICAgICAgICAgY29uc3QgdGVtcENhbnZhcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpOw0KICAgICAgICAgIHRlbXBDYW52YXMud2lkdGggPSBjYW52YXMud2lkdGg7DQogICAgICAgICAgdGVtcENhbnZhcy5oZWlnaHQgPSBjYW52YXMuaGVpZ2h0Ow0KICAgICAgICAgIGNvbnN0IHRlbXBDdHggPSB0ZW1wQ2FudmFzLmdldENvbnRleHQoJzJkJyk7DQogICAgICAgICAgaWYgKCF0ZW1wQ3R4KSByZXR1cm47DQogICAgICAgICAgdGVtcEN0eC5kcmF3SW1hZ2UoY2FudmFzLCAwLCAwKTsNCg0KICAgICAgICAgIGN0eC5maWxsU3R5bGUgPSBjb25maWc/LmNvbG9yTGlnaHQgfHwgJyNmZmZmZmYnOw0KICAgICAgICAgIGN0eC5maWxsUmVjdCgwLCAwLCBjYW52YXMud2lkdGgsIGNhbnZhcy5oZWlnaHQpOw0KDQogICAgICAgICAgaWYgKGNvbmZpZz8udXNlR3JhZGllbnQpIHsNCiAgICAgICAgICAgIGNvbnN0IGdyYWRpZW50ID0gY3R4LmNyZWF0ZUxpbmVhckdyYWRpZW50KDAsIDAsIGNhbnZhcy53aWR0aCwgY2FudmFzLmhlaWdodCk7DQogICAgICAgICAgICBncmFkaWVudC5hZGRDb2xvclN0b3AoMCwgY29uZmlnPy5ncmFkaWVudFN0YXJ0IHx8ICcjNjM2NmYxJyk7DQogICAgICAgICAgICBncmFkaWVudC5hZGRDb2xvclN0b3AoMSwgY29uZmlnPy5ncmFkaWVudEVuZCB8fCAnIzhiNWNmNicpOw0KICAgICAgICAgICAgY3R4LmZpbGxTdHlsZSA9IGdyYWRpZW50Ow0KICAgICAgICAgIH0gZWxzZSB7DQogICAgICAgICAgICBjdHguZmlsbFN0eWxlID0gY29uZmlnPy5jb2xvckRhcmsgfHwgJyMwMDAwMDAnOw0KICAgICAgICAgIH0NCg0KICAgICAgICAgIGNvbnN0IGltYWdlRGF0YSA9IHRlbXBDdHguZ2V0SW1hZ2VEYXRhKDAsIDAsIGNhbnZhcy53aWR0aCwgY2FudmFzLmhlaWdodCk7DQogICAgICAgICAgY29uc3QgZGF0YSA9IGltYWdlRGF0YS5kYXRhOw0KICAgICAgICAgIGNvbnN0IG1vZHVsZVNpemUgPSBjYW52YXMud2lkdGggLyBNYXRoLnNxcnQoZGF0YS5sZW5ndGggLyA0KTsNCiAgICAgICAgICBjb25zdCBtb2R1bGVDb3VudCA9IE1hdGgucm91bmQoY2FudmFzLndpZHRoIC8gbW9kdWxlU2l6ZSk7DQoNCiAgICAgICAgICBmb3IgKGxldCByb3cgPSAwOyByb3cgPCBtb2R1bGVDb3VudDsgcm93KyspIHsNCiAgICAgICAgICAgIGZvciAobGV0IGNvbCA9IDA7IGNvbCA8IG1vZHVsZUNvdW50OyBjb2wrKykgew0KICAgICAgICAgICAgICBjb25zdCB4ID0gY29sICogbW9kdWxlU2l6ZTsNCiAgICAgICAgICAgICAgY29uc3QgeSA9IHJvdyAqIG1vZHVsZVNpemU7DQogICAgICAgICAgICAgIGNvbnN0IGlkeCA9IChNYXRoLmZsb29yKHkgKyBtb2R1bGVTaXplLzIpICogY2FudmFzLndpZHRoICsgTWF0aC5mbG9vcih4ICsgbW9kdWxlU2l6ZS8yKSkgKiA0Ow0KICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgaWYgKGRhdGFbaWR4XSA8IDEyOCkgew0KICAgICAgICAgICAgICAgIGNvbnN0IHNpemUgPSBtb2R1bGVTaXplIC0gMTsNCiAgICAgICAgICAgICAgICBzd2l0Y2ggKGNvbmZpZz8uc3R5bGVUeXBlKSB7DQogICAgICAgICAgICAgICAgICBjYXNlICdyb3VuZGVkJzoNCiAgICAgICAgICAgICAgICAgICAgY3R4LmJlZ2luUGF0aCgpOw0KICAgICAgICAgICAgICAgICAgICBjdHgucm91bmRSZWN0KHggKyAwLjUsIHkgKyAwLjUsIHNpemUsIHNpemUsIHNpemUgKiAwLjMpOw0KICAgICAgICAgICAgICAgICAgICBjdHguZmlsbCgpOw0KICAgICAgICAgICAgICAgICAgICBicmVhazsNCiAgICAgICAgICAgICAgICAgIGNhc2UgJ2RvdCc6DQogICAgICAgICAgICAgICAgICAgIGN0eC5iZWdpblBhdGgoKTsNCiAgICAgICAgICAgICAgICAgICAgY3R4LmFyYyh4ICsgbW9kdWxlU2l6ZSAvIDIsIHkgKyBtb2R1bGVTaXplIC8gMiwgc2l6ZSAqIDAuNCwgMCwgTWF0aC5QSSAqIDIpOw0KICAgICAgICAgICAgICAgICAgICBjdHguZmlsbCgpOw0KICAgICAgICAgICAgICAgICAgICBicmVhazsNCiAgICAgICAgICAgICAgICAgIGNhc2UgJ2xpcXVpZCc6DQogICAgICAgICAgICAgICAgICAgIGN0eC5iZWdpblBhdGgoKTsNCiAgICAgICAgICAgICAgICAgICAgY3R4LmFyYyh4ICsgbW9kdWxlU2l6ZSAvIDIsIHkgKyBtb2R1bGVTaXplIC8gMiwgc2l6ZSAqIDAuNDUsIDAsIE1hdGguUEkgKiAyKTsNCiAgICAgICAgICAgICAgICAgICAgY3R4LmZpbGwoKTsNCiAgICAgICAgICAgICAgICAgICAgYnJlYWs7DQogICAgICAgICAgICAgICAgICBkZWZhdWx0Og0KICAgICAgICAgICAgICAgICAgICBjdHguZmlsbFJlY3QoeCArIDAuNSwgeSArIDAuNSwgc2l6ZSwgc2l6ZSk7DQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICB9DQogICAgICAgICAgICB9DQogICAgICAgICAgfQ0KDQogICAgICAgICAgLy8g5re75YqgTG9nbw0KICAgICAgICAgIGlmIChjb25maWc/LmxvZ29JbWFnZSkgew0KICAgICAgICAgICAgY29uc3QgbG9nbyA9IG5ldyBJbWFnZSgpOw0KICAgICAgICAgICAgbG9nby5jcm9zc09yaWdpbiA9ICdhbm9ueW1vdXMnOw0KICAgICAgICAgICAgbG9nby5vbmxvYWQgPSAoKSA9PiB7DQogICAgICAgICAgICAgIGNvbnN0IGxvZ29XID0gTWF0aC5taW4oY29uZmlnPy5sb2dvV2lkdGggfHwgNDAsIDYwKTsNCiAgICAgICAgICAgICAgY29uc3QgbG9nb0ggPSBNYXRoLm1pbihjb25maWc/LmxvZ29IZWlnaHQgfHwgNDAsIDYwKTsNCiAgICAgICAgICAgICAgY29uc3QgeCA9IChjYW52YXMud2lkdGggLSBsb2dvVykgLyAyOw0KICAgICAgICAgICAgICBjb25zdCB5ID0gKGNhbnZhcy5oZWlnaHQgLSBsb2dvSCkgLyAyOw0KDQogICAgICAgICAgICAgIGlmIChjb25maWc/LmxvZ29CYWNrZ3JvdW5kQ29sb3IgJiYgY29uZmlnPy5sb2dvQmFja2dyb3VuZENvbG9yICE9PSAndHJhbnNwYXJlbnQnKSB7DQogICAgICAgICAgICAgICAgY3R4LmZpbGxTdHlsZSA9IGNvbmZpZy5sb2dvQmFja2dyb3VuZENvbG9yOw0KICAgICAgICAgICAgICAgIGN0eC5iZWdpblBhdGgoKTsNCiAgICAgICAgICAgICAgICBjdHgucm91bmRSZWN0KA0KICAgICAgICAgICAgICAgICAgeCAtIChjb25maWc/LmxvZ29NYXJnaW4gfHwgMyksDQogICAgICAgICAgICAgICAgICB5IC0gKGNvbmZpZz8ubG9nb01hcmdpbiB8fCAzKSwNCiAgICAgICAgICAgICAgICAgIGxvZ29XICsgKGNvbmZpZz8ubG9nb01hcmdpbiB8fCAzKSAqIDIsDQogICAgICAgICAgICAgICAgICBsb2dvSCArIChjb25maWc/LmxvZ29NYXJnaW4gfHwgMykgKiAyLA0KICAgICAgICAgICAgICAgICAgY29uZmlnPy5sb2dvQ29ybmVyUmFkaXVzIHx8IDYNCiAgICAgICAgICAgICAgICApOw0KICAgICAgICAgICAgICAgIGN0eC5maWxsKCk7DQogICAgICAgICAgICAgIH0NCg0KICAgICAgICAgICAgICBjdHguZHJhd0ltYWdlKGxvZ28sIHgsIHksIGxvZ29XLCBsb2dvSCk7DQogICAgICAgICAgICAgIHNldElzTG9hZGluZyhmYWxzZSk7DQogICAgICAgICAgICB9Ow0KICAgICAgICAgICAgbG9nby5zcmMgPSBjb25maWcubG9nb0ltYWdlOw0KICAgICAgICAgIH0gZWxzZSB7DQogICAgICAgICAgICBzZXRJc0xvYWRpbmcoZmFsc2UpOw0KICAgICAgICAgIH0NCiAgICAgICAgfSBlbHNlIHsNCiAgICAgICAgICBzZXRJc0xvYWRpbmcoZmFsc2UpOw0KICAgICAgICB9DQogICAgICB9IGNhdGNoIChlcnIpIHsNCiAgICAgICAgY29uc29sZS5lcnJvcignUVIgcHJldmlldyBlcnJvcjonLCBlcnIpOw0KICAgICAgICBzZXRJc0xvYWRpbmcoZmFsc2UpOw0KICAgICAgfQ0KICAgIH07DQoNCiAgICBnZW5lcmF0ZSgpOw0KICB9LCBbY29kZSwgYmFzZVVybF0pOw0KDQogIHJldHVybiAoDQogICAgPGRpdiBzdHlsZT17eyANCiAgICAgIGRpc3BsYXk6ICdmbGV4JywgDQogICAgICBqdXN0aWZ5Q29udGVudDogJ2NlbnRlcicsIA0KICAgICAgbWFyZ2luQm90dG9tOiAnMjBweCcsDQogICAgICBwYWRkaW5nOiAnMjBweCcsDQogICAgICBiYWNrZ3JvdW5kOiAncmdiYSgyNTUsMjU1LDI1NSwwLjA1KScsDQogICAgICBib3JkZXJSYWRpdXM6ICcxMnB4Jw0KICAgIH19Pg0KICAgICAgPGRpdiBzdHlsZT17eyBwb3NpdGlvbjogJ3JlbGF0aXZlJyB9fT4NCiAgICAgICAgPGNhbnZhcw0KICAgICAgICAgIHJlZj17Y2FudmFzUmVmfQ0KICAgICAgICAgIHdpZHRoPXsyMDB9DQogICAgICAgICAgaGVpZ2h0PXsyMDB9DQogICAgICAgICAgc3R5bGU9e3sgDQogICAgICAgICAgICBkaXNwbGF5OiBpc0xvYWRpbmcgPyAnbm9uZScgOiAnYmxvY2snLA0KICAgICAgICAgICAgYm9yZGVyUmFkaXVzOiAnOHB4JywNCiAgICAgICAgICAgIGJveFNoYWRvdzogJzAgNHB4IDEycHggcmdiYSgwLDAsMCwwLjMpJw0KICAgICAgICAgIH19DQogICAgICAgIC8+DQogICAgICAgIHtpc0xvYWRpbmcgJiYgKA0KICAgICAgICAgIDxkaXYgc3R5bGU9e3sNCiAgICAgICAgICAgIHdpZHRoOiAnMjAwcHgnLA0KICAgICAgICAgICAgaGVpZ2h0OiAnMjAwcHgnLA0KICAgICAgICAgICAgZGlzcGxheTogJ2ZsZXgnLA0KICAgICAgICAgICAgYWxpZ25JdGVtczogJ2NlbnRlcicsDQogICAgICAgICAgICBqdXN0aWZ5Q29udGVudDogJ2NlbnRlcicsDQogICAgICAgICAgICBiYWNrZ3JvdW5kOiAncmdiYSgwLDAsMCwwLjIpJywNCiAgICAgICAgICAgIGJvcmRlclJhZGl1czogJzhweCcsDQogICAgICAgICAgICBjb2xvcjogJyM2NDc0OGInDQogICAgICAgICAgfX0+DQogICAgICAgICAgICDliqDovb3kuK0uLi4NCiAgICAgICAgICA8L2Rpdj4NCiAgICAgICAgKX0NCiAgICAgIDwvZGl2Pg0KICAgIDwvZGl2Pg0KICApOw0KfQ0KDQpleHBvcnQgZGVmYXVsdCBEeW5hbWljUVI7DQo=
+import { useState, useEffect, useRef } from 'react';
+import QRCode from 'qrcode';
+import { QRGenerator } from './QRGenerator';
+import type { QRCodeConfig } from './QRGenerator';
+import {
+  createDynamicQRCode,
+  getAllDynamicQRCodes,
+  updateDynamicQRCodeTarget,
+  deleteDynamicQRCode,
+  type DynamicQRCode,
+} from '../lib/supabase';
+
+export function DynamicQR() {
+  const [activeTab, setActiveTab] = useState<'create' | 'manage'>('create');
+  const [dynamicCodes, setDynamicCodes] = useState<DynamicQRCode[]>([]);
+  const [targetUrl, setTargetUrl] = useState('');
+  const [selectedCode, setSelectedCode] = useState<DynamicQRCode | null>(null);
+  const [editUrl, setEditUrl] = useState('');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [qrConfig, setQrConfig] = useState<QRCodeConfig>({
+    text: '',
+    width: 300,
+    height: 300,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: 'H',
+    margin: 2,
+    logoImage: null,
+    logoWidth: 60,
+    logoHeight: 60,
+    logoMargin: 5,
+    logoCornerRadius: 8,
+    logoBackgroundColor: '#ffffff',
+    styleType: 'square',
+    gradientStart: '#6366f1',
+    gradientEnd: '#8b5cf6',
+    useGradient: false,
+    backgroundImage: null,
+  });
+
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+
+  // 加载所有活码
+  useEffect(() => {
+    loadDynamicCodes();
+  }, []);
+
+  const loadDynamicCodes = async () => {
+    setIsLoading(true);
+    const codes = await getAllDynamicQRCodes();
+    setDynamicCodes(codes);
+    setIsLoading(false);
+  };
+
+  const createDynamicCode = async () => {
+    if (!targetUrl.trim()) {
+      setError('请输入目标链接地址');
+      return;
+    }
+
+    // 验证 URL
+    let validUrl = targetUrl;
+    if (!/^https?:\/\//i.test(validUrl)) {
+      validUrl = 'https://' + validUrl;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    const newCode = await createDynamicQRCode(validUrl, qrConfig);
+
+    if (newCode) {
+      setDynamicCodes((prev) => [newCode, ...prev]);
+      setTargetUrl('');
+      setActiveTab('manage');
+      alert('活码创建成功！');
+    } else {
+      setError('创建失败，请重试');
+    }
+
+    setIsLoading(false);
+  };
+
+  const updateTargetUrl = async () => {
+    if (!selectedCode || !editUrl.trim()) return;
+
+    // 验证 URL
+    let validUrl = editUrl;
+    if (!/^https?:\/\//i.test(validUrl)) {
+      validUrl = 'https://' + validUrl;
+    }
+
+    setIsLoading(true);
+    const success = await updateDynamicQRCodeTarget(selectedCode.id, validUrl as string);
+
+    if (success) {
+      setDynamicCodes((prev) =>
+        prev.map((code) =>
+          code.id === selectedCode.id
+            ? { ...code, target_url: validUrl as string, updated_at: new Date().toISOString() }
+            : code
+        )
+      );
+      setShowEditModal(false);
+      setSelectedCode(null);
+      setEditUrl('');
+      alert('链接地址更新成功！');
+    } else {
+      alert('更新失败，请重试');
+    }
+
+    setIsLoading(false);
+  };
+
+  const deleteCode = async (id: string) => {
+    if (!confirm('确定要删除这个活码吗？此操作不可恢复。')) return;
+
+    setIsLoading(true);
+    const success = await deleteDynamicQRCode(id);
+
+    if (success) {
+      setDynamicCodes((prev) => prev.filter((code) => code.id !== id));
+    } else {
+      alert('删除失败，请重试');
+    }
+
+    setIsLoading(false);
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('已复制到剪贴板！');
+    } catch {
+      alert('复制失败');
+    }
+  };
+
+  const formatDate = (timestamp: string) => {
+    return new Date(timestamp).toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  // 生成活码二维码图片
+  const generateQRCodeImage = async (code: DynamicQRCode): Promise<string> => {
+    const canvas = document.createElement('canvas');
+    const config = code.qr_config as QRCodeConfig;
+    const qrUrl = `${baseUrl}/r/${code.short_code}`;
+    
+    try {
+      await QRCode.toCanvas(canvas, qrUrl, {
+        width: config?.width || 300,
+        margin: config?.margin || 2,
+        color: {
+          dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
+          light: config?.colorLight || '#ffffff',
+        },
+        errorCorrectionLevel: config?.correctLevel || 'H',
+      } as any);
+
+      // 应用自定义样式
+      if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return canvas.toDataURL('image/png');
+
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        if (!tempCtx) return canvas.toDataURL('image/png');
+        tempCtx.drawImage(canvas, 0, 0);
+
+        ctx.fillStyle = config?.colorLight || '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (config?.useGradient) {
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+          gradient.addColorStop(0, config?.gradientStart || '#6366f1');
+          gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
+          ctx.fillStyle = gradient;
+        } else {
+          ctx.fillStyle = config?.colorDark || '#000000';
+        }
+
+        const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        const moduleSize = canvas.width / Math.sqrt(data.length / 4);
+        const moduleCount = Math.round(canvas.width / moduleSize);
+
+        for (let row = 0; row < moduleCount; row++) {
+          for (let col = 0; col < moduleCount; col++) {
+            const x = col * moduleSize;
+            const y = row * moduleSize;
+            const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
+            
+            if (data[idx] < 128) {
+              const size = moduleSize - 1;
+              switch (config?.styleType) {
+                case 'rounded':
+                  ctx.beginPath();
+                  ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
+                  ctx.fill();
+                  break;
+                case 'dot':
+                  ctx.beginPath();
+                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
+                  ctx.fill();
+                  break;
+                case 'liquid':
+                  ctx.beginPath();
+                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
+                  ctx.fill();
+                  break;
+                default:
+                  ctx.fillRect(x + 0.5, y + 0.5, size, size);
+              }
+            }
+          }
+        }
+
+        // 添加Logo
+        if (config?.logoImage) {
+          const logo = new Image();
+          logo.crossOrigin = 'anonymous';
+          await new Promise<void>((resolve) => {
+            logo.onload = () => {
+              const logoW = config?.logoWidth || 60;
+              const logoH = config?.logoHeight || 60;
+              const x = (canvas.width - logoW) / 2;
+              const y = (canvas.height - logoH) / 2;
+
+              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+                ctx.fillStyle = config.logoBackgroundColor;
+                ctx.beginPath();
+                ctx.roundRect(
+                  x - (config?.logoMargin || 5),
+                  y - (config?.logoMargin || 5),
+                  logoW + (config?.logoMargin || 5) * 2,
+                  logoH + (config?.logoMargin || 5) * 2,
+                  config?.logoCornerRadius || 8
+                );
+                ctx.fill();
+              }
+
+              ctx.drawImage(logo, x, y, logoW, logoH);
+              resolve();
+            };
+            logo.src = config.logoImage;
+          });
+        }
+      }
+
+      return canvas.toDataURL('image/png');
+    } catch (err) {
+      console.error('QR generation error:', err);
+      return '';
+    }
+  };
+
+  // 下载活码二维码
+  const downloadQRCode = async (code: DynamicQRCode) => {
+    const dataUrl = await generateQRCodeImage(code);
+    if (!dataUrl) {
+      alert('生成二维码失败');
+      return;
+    }
+    const link = document.createElement('a');
+    link.download = `qrcode-${code.short_code}.png`;
+    link.href = dataUrl;
+    link.click();
+  };
+
+  return (
+    <div className="dynamic-qr-container">
+      {/* Tab Navigation */}
+      <div className="tab-navigation">
+        <button
+          className={activeTab === 'create' ? 'active' : ''}
+          onClick={() => setActiveTab('create')}
+        >
+          创建活码
+        </button>
+        <button
+          className={activeTab === 'manage' ? 'active' : ''}
+          onClick={() => setActiveTab('manage')}
+        >
+          管理活码 ({dynamicCodes.length})
+        </button>
+      </div>
+
+      {/* Create Tab */}
+      {activeTab === 'create' && (
+        <div className="create-section">
+          <div className="create-form">
+            {error && (
+              <div style={{ color: '#ef4444', marginBottom: '15px', padding: '10px', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px' }}>
+                {error}
+              </div>
+            )}
+            
+            <div className="qr-customization">
+              <h3>配置活码</h3>
+              <p className="form-hint" style={{ marginBottom: '20px', color: '#64748b' }}>
+                在下方输入目标链接地址，活码创建后可随时修改链接而二维码图案不变
+              </p>
+              <QRGenerator
+                config={{ ...qrConfig, text: targetUrl }}
+                onConfigChange={(config) => {
+                  setQrConfig(config);
+                  setTargetUrl(config.text);
+                }}
+              />
+            </div>
+
+            <button 
+              className="create-btn" 
+              onClick={createDynamicCode}
+              disabled={isLoading}
+            >
+              {isLoading ? '创建中...' : '创建活码'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Manage Tab */}
+      {activeTab === 'manage' && (
+        <div className="manage-section">
+          {isLoading ? (
+            <div className="empty-state">
+              <p>加载中...</p>
+            </div>
+          ) : dynamicCodes.length === 0 ? (
+            <div className="empty-state">
+              <p>暂无活码</p>
+              <button onClick={() => setActiveTab('create')}>创建第一个活码</button>
+            </div>
+          ) : (
+            <div className="codes-list">
+              {dynamicCodes.map((code) => (
+                <div key={code.id} className="code-card">
+                  <div className="code-info">
+                    <div className="code-header">
+                      <span className="short-code">{code.short_code}</span>
+                      <span className="scan-count">
+                        扫描次数: {code.scan_count}
+                      </span>
+                    </div>
+
+                    {/* 活码二维码预览 */}
+                    <DynamicQRPreview code={code} baseUrl={baseUrl} />
+                    
+                    <div className="url-section">
+                      <label>跳转链接:</label>
+                      <div className="url-row">
+                        <input
+                          type="text"
+                          value={code.target_url}
+                          readOnly
+                          className="url-input"
+                        />
+                        <button
+                          onClick={() => copyToClipboard(code.target_url)}
+                          className="icon-btn"
+                        >
+                          复制
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="url-section">
+                      <label>活码链接:</label>
+                      <div className="url-row">
+                        <input
+                          type="text"
+                          value={`${baseUrl}/r/${code.short_code}`}
+                          readOnly
+                          className="url-input"
+                        />
+                        <button
+                          onClick={() => copyToClipboard(`${baseUrl}/r/${code.short_code}`)}
+                          className="icon-btn"
+                        >
+                          复制
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="code-meta">
+                      <span>创建于: {formatDate(code.created_at)}</span>
+                    </div>
+                  </div>
+
+                  <div className="code-actions">
+                    <button
+                      onClick={() => downloadQRCode(code)}
+                      className="download-btn"
+                      style={{
+                        padding: '10px 20px',
+                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        border: 'none',
+                        borderRadius: '8px',
+                        color: '#fff',
+                        fontSize: '0.9rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      下载二维码
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedCode(code);
+                        setEditUrl(code.target_url);
+                        setShowEditModal(true);
+                      }}
+                      className="edit-btn"
+                    >
+                      修改地址
+                    </button>
+                    <button
+                      onClick={() => deleteCode(code.id)}
+                      className="delete-btn"
+                      disabled={isLoading}
+                    >
+                      删除
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {showEditModal && selectedCode && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>修改跳转地址</h3>
+            <div className="form-group">
+              <label>新的目标链接</label>
+              <input
+                type="text"
+                value={editUrl}
+                onChange={(e) => setEditUrl(e.target.value)}
+                placeholder="https://example.com"
+              />
+            </div>
+            <div className="modal-actions">
+              <button onClick={() => setShowEditModal(false)}>取消</button>
+              <button 
+                onClick={updateTargetUrl} 
+                className="confirm-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? '保存中...' : '确认修改'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// 活码二维码预览组件
+function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const generate = async () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      
+      const config = code.qr_config as QRCodeConfig;
+      const qrUrl = `${baseUrl}/r/${code.short_code}`;
+      
+      try {
+        await QRCode.toCanvas(canvas, qrUrl, {
+          width: 200,
+          margin: 2,
+          color: {
+            dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
+            light: config?.colorLight || '#ffffff',
+          },
+          errorCorrectionLevel: 'H',
+        } as any);
+
+        // 应用自定义样式
+        if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvas.width;
+          tempCanvas.height = canvas.height;
+          const tempCtx = tempCanvas.getContext('2d');
+          if (!tempCtx) return;
+          tempCtx.drawImage(canvas, 0, 0);
+
+          ctx.fillStyle = config?.colorLight || '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          if (config?.useGradient) {
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, config?.gradientStart || '#6366f1');
+            gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
+            ctx.fillStyle = gradient;
+          } else {
+            ctx.fillStyle = config?.colorDark || '#000000';
+          }
+
+          const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+          const moduleSize = canvas.width / Math.sqrt(data.length / 4);
+          const moduleCount = Math.round(canvas.width / moduleSize);
+
+          for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+              const x = col * moduleSize;
+              const y = row * moduleSize;
+              const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
+              
+              if (data[idx] < 128) {
+                const size = moduleSize - 1;
+                switch (config?.styleType) {
+                  case 'rounded':
+                    ctx.beginPath();
+                    ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
+                    ctx.fill();
+                    break;
+                  case 'dot':
+                    ctx.beginPath();
+                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                  case 'liquid':
+                    ctx.beginPath();
+                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                  default:
+                    ctx.fillRect(x + 0.5, y + 0.5, size, size);
+                }
+              }
+            }
+          }
+
+          // 添加Logo
+          if (config?.logoImage) {
+            const logo = new Image();
+            logo.crossOrigin = 'anonymous';
+            logo.onload = () => {
+              const logoW = Math.min(config?.logoWidth || 40, 60);
+              const logoH = Math.min(config?.logoHeight || 40, 60);
+              const x = (canvas.width - logoW) / 2;
+              const y = (canvas.height - logoH) / 2;
+
+              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+                ctx.fillStyle = config.logoBackgroundColor;
+                ctx.beginPath();
+                ctx.roundRect(
+                  x - (config?.logoMargin || 3),
+                  y - (config?.logoMargin || 3),
+                  logoW + (config?.logoMargin || 3) * 2,
+                  logoH + (config?.logoMargin || 3) * 2,
+                  config?.logoCornerRadius || 6
+                );
+                ctx.fill();
+              }
+
+              ctx.drawImage(logo, x, y, logoW, logoH);
+              setIsLoading(false);
+            };
+            logo.src = config.logoImage;
+          } else {
+            setIsLoading(false);
+          }
+        } else {
+          setIsLoading(false);
+        }
+      } catch (err) {
+        console.error('QR preview error:', err);
+        setIsLoading(false);
+      }
+    };
+
+    generate();
+  }, [code, baseUrl]);
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      marginBottom: '20px',
+      padding: '20px',
+      background: 'rgba(255,255,255,0.05)',
+      borderRadius: '12px'
+    }}>
+      <div style={{ position: 'relative' }}>
+        <canvas
+          ref={canvasRef}
+          width={200}
+          height={200}
+          style={{ 
+            display: isLoading ? 'none' : 'block',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+          }}
+        />
+        {isLoading && (
+          <div style={{
+            width: '200px',
+            height: '200px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,0,0,0.2)',
+            borderRadius: '8px',
+            color: '#64748b'
+          }}>
+            加载中...
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default DynamicQR;
