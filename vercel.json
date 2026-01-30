@@ -11,7 +11,11 @@
       "destination": "/vite.svg"
     },
     {
-      "source": "(.*)",
+      "source": "/r/:shortCode",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
