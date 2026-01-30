@@ -35,12 +35,24 @@ npm install
 
 ### 3. 配置环境变量
 
-创建 `.env` 文件：
+复制 `.env.example` 为 `.env`：
+
+```bash
+cp .env.example .env
+```
+
+然后编辑 `.env` 文件，填入你的 Supabase 凭证：
 
 ```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
+
+**获取 Supabase 凭证：**
+1. 访问 https://supabase.com/dashboard
+2. 选择或创建项目
+3. 进入 Settings → API
+4. 复制 Project URL 和 anon/public key
 
 ### 4. 启动开发服务器
 
@@ -62,7 +74,7 @@ npm run dev
 
 ```sql
 -- 活码表
-CREATE TABLE dynamic_qr_codes (
+CREATE TABLE IF NOT EXISTS dynamic_qr_codes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     short_code TEXT UNIQUE NOT NULL,
     target_url TEXT NOT NULL,
@@ -73,7 +85,7 @@ CREATE TABLE dynamic_qr_codes (
 );
 
 -- 扫描日志表
-CREATE TABLE qr_scan_logs (
+CREATE TABLE IF NOT EXISTS qr_scan_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     qr_code_id UUID REFERENCES dynamic_qr_codes(id) ON DELETE CASCADE,
     ip_address TEXT,
