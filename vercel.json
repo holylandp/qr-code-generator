@@ -3,19 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/vite.svg",
-      "destination": "/vite.svg"
-    },
-    {
-      "source": "/r/:shortCode",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(.*)",
+      "source": "(.*)",
       "destination": "/index.html"
     }
   ],
