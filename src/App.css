@@ -769,6 +769,120 @@ body {
   display: none;
 }
 
+/* Redirect Page Styles */
+.redirect-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 20px;
+}
+
+.redirect-content {
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 24px;
+  padding: 48px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(99, 102, 241, 0.2);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.redirect-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.error-icon {
+  font-size: 64px;
+  color: #ef4444;
+  margin-bottom: 24px;
+}
+
+.redirect-content h1 {
+  font-size: 2rem;
+  color: #f1f5f9;
+  margin-bottom: 16px;
+}
+
+.redirect-content p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.target-url {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  margin: 24px 0;
+  word-break: break-all;
+}
+
+.countdown {
+  color: #6366f1;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.redirect-now-btn {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.redirect-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.redirect-content button:not(.redirect-now-btn) {
+  padding: 14px 32px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 10px;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.redirect-content button:not(.redirect-now-btn):hover {
+  background: rgba(30, 41, 59, 1);
+  color: #e2e8f0;
+  border-color: #6366f1;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .app-title {
@@ -800,5 +914,13 @@ body {
 
   .modal-content {
     padding: 24px;
+  }
+
+  .redirect-content {
+    padding: 32px 24px;
+  }
+
+  .redirect-content h1 {
+    font-size: 1.5rem;
   }
 }
