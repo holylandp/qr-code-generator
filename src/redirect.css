@@ -1,109 +1,95 @@
-.minecraft-title {
-  font-family: 'Courier New', 'VT323', monospace;
-  font-weight: 900;
-  font-size: 3.5rem;
-  letter-spacing: 8px;
-  margin: 0;
-  line-height: 1.2;
-  display: inline-block;
-  filter: contrast(1.5);
-}
+/* Minecraft 3D 像素字体样式 - 粉紫色主题 */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.minecraft-title .char {
-  display: inline-block;
-  color: #ffffff;
-  font-size: 4rem;
-  text-shadow:
-    4px 4px 0px #9333ea,
-    -4px -4px 0px #7c3aed,
-    4px 0px 0px #a855f7,
-    0px 4px 0px #c084fc,
-    2px 2px 0px #6366f1,
-    -2px -2px 0px #8b5cf6;
-  animation: charBounce 0.6s ease-in-out infinite;
-  margin: 0 2px;
-}
-
-@keyframes charBounce {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-15px) scale(1.1);
-  }
-}
-
-/* 紫色跳轉頁面背景 */
 .redirect-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2e1a47 0%, #7c3aed 50%, #a855f7 100%);
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 30%, #d8b4fe 60%, #c084fc 100%);
   padding: 20px;
 }
 
 .redirect-content {
-  background: rgba(45, 20, 85, 0.95);
-  border-radius: 24px;
-  padding: 48px;
-  max-width: 600px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 32px;
+  padding: 60px 48px;
+  max-width: 700px;
   width: 100%;
   text-align: center;
-  border: 2px solid rgba(168, 85, 247, 0.5);
-  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.5);
-  backdrop-filter: blur(20px);
+  border: 4px solid #e9d5ff;
+  box-shadow: 0 25px 50px -12px rgba(192, 132, 252, 0.4), 0 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.minecraft-title {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  margin: 0 0 30px 0;
+  line-height: 1.6;
+  display: inline-block;
+  color: #f0f0f0;
+  text-shadow:
+    0 -2px 0 #ffffff,
+    0 -1px 0 #e8e8e8,
+    1px 1px 0 #c0c0c0,
+    2px 2px 0 #a0a0a0,
+    3px 3px 0 #808080,
+    4px 4px 0 #606060,
+    0 1px 0 #c0c0c0,
+    0 2px 0 #a0a0a0,
+    0 3px 0 #808080,
+    0 4px 0 #606060,
+    0 5px 0 #404040,
+    4px 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.minecraft-title .char {
+  display: inline-block;
+  animation: charBounce 0.8s ease-in-out infinite;
+  margin: 0 4px;
+  -webkit-text-stroke: 2px #505050;
+}
+
+@keyframes charBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 
 .loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #a855f7;
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(192, 132, 252, 0.3);
+  border-top-color: #c084fc;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 0 auto 24px;
+  margin: 0 auto 30px;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.error-icon {
-  font-size: 64px;
-  color: #ef4444;
-  margin-bottom: 24px;
-}
+.error-icon { font-size: 64px; color: #ef4444; margin-bottom: 24px; }
 
-.redirect-content p {
-  color: #e0e7ff;
-  font-size: 1.1rem;
-  margin-bottom: 24px;
-}
-
-.error-message {
-  color: #e0e7ff;
-  font-size: 1.1rem;
-  margin-bottom: 24px;
-}
+.redirect-content p { color: #7c3aed; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; }
 
 .redirect-content button {
-  padding: 14px 32px;
-  background: rgba(168, 85, 247, 0.8);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  color: #f1f5f9;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #c084fc, #d4a5e8);
+  border: 3px solid #ffffff;
+  border-radius: 16px;
+  color: #ffffff;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Courier New', monospace;
+  font-family: 'Press Start 2P', monospace;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 15px rgba(192, 132, 252, 0.4);
 }
 
 .redirect-content button:hover {
-  background: rgba(192, 132, 252, 0.9);
-  color: #fff;
-  border-color: #c084fc;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(192, 132, 252, 0.6);
+  background: linear-gradient(135deg, #d4a5e8, #e9d5ff);
 }
