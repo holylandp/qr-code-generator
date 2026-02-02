@@ -43,7 +43,14 @@ export function RedirectHandler() {
       <div className="redirect-container">
         <div className="redirect-content">
           <div className="error-icon">✕</div>
-          <h1 className="minecraft-title">澳門培華中學</h1>
+          <h1 className="minecraft-title">
+            <span className="char" style={{animationDelay: '0s'}}>澳</span>
+            <span className="char" style={{animationDelay: '0.1s'}}>門</span>
+            <span className="char" style={{animationDelay: '0.2s'}}>培</span>
+            <span className="char" style={{animationDelay: '0.3s'}}>華</span>
+            <span className="char" style={{animationDelay: '0.4s'}}>中</span>
+            <span className="char" style={{animationDelay: '0.5s'}}>學</span>
+          </h1>
           <p className="error-message">抱歉，您訪問的活碼連結未找到或已被刪除。</p>
           <button onClick={() => window.location.href = '/'}>
             返回首頁
@@ -57,8 +64,15 @@ export function RedirectHandler() {
     <div className="redirect-container">
       <div className="redirect-content">
         <div className="loading-spinner"></div>
-        <h1 className="minecraft-title">澳門培華中學</h1>
-        <p className="redirect-message">正在跳转...</p>
+        <h1 className="minecraft-title">
+          <span className="char" style={{animationDelay: '0s'}}>澳</span>
+          <span className="char" style={{animationDelay: '0.1s'}}>門</span>
+          <span className="char" style={{animationDelay: '0.2s'}}>培</span>
+          <span className="char" style={{animationDelay: '0.3s'}}>華</span>
+          <span className="char" style={{animationDelay: '0.4s'}}>中</span>
+          <span className="char" style={{animationDelay: '0.5s'}}>學</span>
+        </h1>
+        <p className="redirect-message">正在跳轉...</p>
       </div>
     </div>
   );
