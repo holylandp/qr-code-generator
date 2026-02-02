@@ -7,6 +7,7 @@ interface MinecraftTitleProps {
 
 const MinecraftTitle: React.FC<MinecraftTitleProps> = ({ text }) => {
   const characters = text.split('');
+
   const letterVariants = {
     initial: { y: 0, scaleY: 1, scaleX: 1, rotate: 0 },
     animate: (i: number) => ({
@@ -14,7 +15,14 @@ const MinecraftTitle: React.FC<MinecraftTitleProps> = ({ text }) => {
       scaleY: [1, 1.25, 0.9, 1],
       scaleX: [1, 0.85, 1.1, 1],
       rotate: [0, -5, 5, 0],
-      transition: { delay: i * 0.08, duration: 1.2, repeat: Infinity, repeatDelay: 0.5, ease: "easeInOut", times: [0, 0.4, 0.8, 1] }
+      transition: {
+        delay: i * 0.08,
+        duration: 1.2,
+        repeat: Infinity,
+        repeatDelay: 0.5,
+        ease: "easeInOut" as const,
+        times: [0, 0.4, 0.8, 1]
+      },
     }),
   };
 
