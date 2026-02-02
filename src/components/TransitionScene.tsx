@@ -8,6 +8,7 @@ import MinecraftTitle from './MinecraftTitle';
 const CameraRig = () => {
   const { camera, mouse } = useThree();
   const vec = new THREE.Vector3();
+
   useFrame(() => {
     vec.set(mouse.x * 0.5, mouse.y * 0.5, camera.position.z);
     camera.position.lerp(vec, 0.05);
@@ -16,11 +17,7 @@ const CameraRig = () => {
   return null;
 };
 
-interface TransitionSceneProps {
-  title?: string; subtitle?: string; showSubtitle?: boolean;
-}
-
-const TransitionScene: React.FC<TransitionSceneProps> = ({ title = "澳門培華中學", subtitle, showSubtitle = true }) => {
+const TransitionScene: React.FC = () => {
   return (
     <div className="relative w-full h-full bg-[#f0f9ff]">
       <div className="absolute inset-0 z-0">
@@ -37,13 +34,8 @@ const TransitionScene: React.FC<TransitionSceneProps> = ({ title = "澳門培華
       </div>
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none">
         <div className="w-full flex justify-center px-4">
-          <MinecraftTitle text={title} />
+          <MinecraftTitle text="PUIVA MACAU" />
         </div>
-        {showSubtitle && subtitle && (
-          <div className="mt-8 text-center">
-            <p className="text-xl sm:text-2xl font-bold text-purple-600/80 drop-shadow-lg">{subtitle}</p>
-          </div>
-        )}
       </div>
     </div>
   );

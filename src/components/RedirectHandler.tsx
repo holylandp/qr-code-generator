@@ -24,7 +24,7 @@ export function RedirectHandler() {
   if (status === 'not-found') {
     return (
       <div className="redirect-container">
-        <TransitionScene title="PUIVA MACAU" />
+        <TransitionScene />
         <div className="redirect-overlay">
           <div className="error-card">
             <div className="error-icon">✕</div>
@@ -35,9 +35,10 @@ export function RedirectHandler() {
       </div>
     );
   }
+
   return (
     <div className="redirect-container">
-      <TransitionScene title="PUIVA MACAU" subtitle="正在跳轉..." />
+      <TransitionScene />
     </div>
   );
 }
