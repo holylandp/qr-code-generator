@@ -43,10 +43,10 @@ export function RedirectHandler() {
       <div className="redirect-container">
         <div className="redirect-content">
           <div className="error-icon">✕</div>
-          <h1>链接不存在</h1>
-          <p>抱歉,您访问的活码链接未找到或已被删除。</p>
+          <h1 className="minecraft-title">澳門培華中學</h1>
+          <p className="error-message">抱歉，您訪問的活碼連結未找到或已被刪除。</p>
           <button onClick={() => window.location.href = '/'}>
-            返回首页
+            返回首頁
           </button>
         </div>
       </div>
@@ -57,7 +57,8 @@ export function RedirectHandler() {
     <div className="redirect-container">
       <div className="redirect-content">
         <div className="loading-spinner"></div>
-        <p>正在跳转...</p>
+        <h1 className="minecraft-title">澳門培華中學</h1>
+        <p className="redirect-message">正在跳转...</p>
       </div>
     </div>
   );
