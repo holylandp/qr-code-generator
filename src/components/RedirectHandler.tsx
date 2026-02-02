@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getDynamicQRCodeByShortCode, recordScan } from '../lib/supabase';
+import '../redirect.css';
 
 export function RedirectHandler() {
   const [status, setStatus] = useState<'loading' | 'not-found'>('loading');
 
   useEffect(() => {
     const handleRedirect = async () => {
-      // Get the short code from URL path
       const path = window.location.pathname;
       const match = path.match(/^\/r\/([A-Za-z0-9]+)$/);
 
@@ -18,16 +18,11 @@ export function RedirectHandler() {
       const shortCode = match[1];
       console.log('Looking up short code:', shortCode);
 
-      // Fetch from Supabase
       const code = await getDynamicQRCodeByShortCode(shortCode);
 
       if (code) {
         console.log('Found code:', code);
-
-        // Record the scan
         await recordScan(shortCode);
-
-        // Redirect immediately
         window.location.href = code.target_url;
       } else {
         console.log('Code not found for:', shortCode);
