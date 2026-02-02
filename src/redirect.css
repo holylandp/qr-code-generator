@@ -1,95 +1,175 @@
-/* Minecraft 3D 像素字体样式 - 粉紫色主题 */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* 過渡頁樣板風格 - 粉紫學術風 */
 
 .redirect-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 30%, #d8b4fe 60%, #c084fc 100%);
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f3e8ff 100%);
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .redirect-content {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 32px;
   padding: 60px 48px;
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
   text-align: center;
-  border: 4px solid #e9d5ff;
-  box-shadow: 0 25px 50px -12px rgba(192, 132, 252, 0.4), 0 0 0 8px rgba(255, 255, 255, 0.5);
+  border: 3px solid rgba(224, 170, 255, 0.5);
+  box-shadow: 
+    0 25px 50px -12px rgba(192, 132, 252, 0.3),
+    0 0 0 8px rgba(255, 255, 255, 0.5),
+    inset 0 0 30px rgba(224, 170, 255, 0.1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  z-index: 10;
 }
 
-.minecraft-title {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
-  font-size: 2.2rem;
-  letter-spacing: 6px;
-  margin: 0 0 30px 0;
-  line-height: 1.6;
+/* Minecraft 標題容器 */
+.minecraft-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.minecraft-title-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+
+/* 空格 */
+.minecraft-space {
+  width: 16px;
   display: inline-block;
-  color: #f0f0f0;
-  text-shadow:
-    0 -2px 0 #ffffff,
-    0 -1px 0 #e8e8e8,
-    1px 1px 0 #c0c0c0,
-    2px 2px 0 #a0a0a0,
-    3px 3px 0 #808080,
-    4px 4px 0 #606060,
-    0 1px 0 #c0c0c0,
-    0 2px 0 #a0a0a0,
-    0 3px 0 #808080,
-    0 4px 0 #606060,
-    0 5px 0 #404040,
-    4px 8px 12px rgba(0, 0, 0, 0.4);
 }
 
-.minecraft-title .char {
+/* 單個字符動畫 - 液體果凍效果 */
+.minecraft-char {
   display: inline-block;
-  animation: charBounce 0.8s ease-in-out infinite;
-  margin: 0 4px;
-  -webkit-text-stroke: 2px #505050;
+  position: relative;
+  cursor: default;
+  transform-origin: bottom center;
+  animation: liquidJelly 1.2s ease-in-out infinite;
 }
 
-@keyframes charBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+.minecraft-char-inner {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #f472b6 0%, #c084fc 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 0px rgba(244, 114, 182, 0.2)) drop-shadow(0 8px 15px rgba(129, 140, 248, 0.25));
+  display: block;
+  letter-spacing: -0.06em;
+  padding: 0 2px;
 }
 
+/* 液體果凍動畫 */
+@keyframes liquidJelly {
+  0%, 100% {
+    transform: translateY(0) scaleY(1) scaleX(1) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-25px) scaleY(1.25) scaleX(0.85) rotate(-3deg);
+  }
+  80% {
+    transform: translateY(0) scaleY(0.9) scaleX(1.1) rotate(2deg);
+  }
+}
+
+/* 加載旋轉器 */
 .loading-spinner {
   width: 60px;
   height: 60px;
-  border: 6px solid rgba(192, 132, 252, 0.3);
+  border: 6px solid rgba(192, 132, 252, 0.2);
   border-top-color: #c084fc;
+  border-right-color: #f472b6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 30px;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
-.error-icon { font-size: 64px; color: #ef4444; margin-bottom: 24px; }
+/* 錯誤圖標 */
+.error-icon {
+  font-size: 64px;
+  color: #ef4444;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-.redirect-content p { color: #7c3aed; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; }
+/* 文字訊息 */
+.redirect-message,
+.error-message {
+  color: #7c3aed;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
 
+/* 按鈕 */
 .redirect-content button {
   padding: 16px 40px;
-  background: linear-gradient(135deg, #c084fc, #d4a5e8);
-  border: 3px solid #ffffff;
+  background: linear-gradient(135deg, #c084fc, #f472b6);
+  border: none;
   border-radius: 16px;
   color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Press Start 2P', monospace;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  box-shadow: 0 4px 15px rgba(192, 132, 252, 0.4);
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 1px;
+  box-shadow: 
+    0 4px 15px rgba(192, 132, 252, 0.4),
+    0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
 .redirect-content button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(192, 132, 252, 0.6);
-  background: linear-gradient(135deg, #d4a5e8, #e9d5ff);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(192, 132, 252, 0.6),
+    0 0 0 3px rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, #d4a5e8, #f9a8d4);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .redirect-content {
+    padding: 40px 24px;
+    margin: 16px;
+  }
+  
+  .minecraft-char-inner {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+  
+  .minecraft-space {
+    width: 8px;
+  }
+  
+  @keyframes liquidJelly {
+    0%, 100% {
+      transform: translateY(0) scaleY(1) scaleX(1) rotate(0deg);
+    }
+    40% {
+      transform: translateY(-15px) scaleY(1.2) scaleX(0.9) rotate(-2deg);
+    }
+    80% {
+      transform: translateY(0) scaleY(0.95) scaleX(1.05) rotate(1deg);
+    }
+  }
 }

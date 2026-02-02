@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDynamicQRCodeByShortCode, recordScan } from '../lib/supabase';
+import FloatingBlocks from './FloatingBlocks';
+import MinecraftTitle from './MinecraftTitle';
 import '../redirect.css';
 
 export function RedirectHandler() {
@@ -36,16 +38,10 @@ export function RedirectHandler() {
   if (status === 'not-found') {
     return (
       <div className="redirect-container">
+        <FloatingBlocks />
         <div className="redirect-content">
           <div className="error-icon">✕</div>
-          <h1 className="minecraft-title">
-            <span className="char" style={{animationDelay: '0s'}}>澳</span>
-            <span className="char" style={{animationDelay: '0.1s'}}>門</span>
-            <span className="char" style={{animationDelay: '0.2s'}}>培</span>
-            <span className="char" style={{animationDelay: '0.3s'}}>華</span>
-            <span className="char" style={{animationDelay: '0.4s'}}>中</span>
-            <span className="char" style={{animationDelay: '0.5s'}}>學</span>
-          </h1>
+          <MinecraftTitle text="澳門培華中學" />
           <p className="error-message">抱歉，您訪問的活碼連結未找到或已被刪除。</p>
           <button onClick={() => window.location.href = '/'}>
             返回首頁
@@ -57,16 +53,10 @@ export function RedirectHandler() {
 
   return (
     <div className="redirect-container">
+      <FloatingBlocks />
       <div className="redirect-content">
         <div className="loading-spinner"></div>
-        <h1 className="minecraft-title">
-          <span className="char" style={{animationDelay: '0s'}}>澳</span>
-          <span className="char" style={{animationDelay: '0.1s'}}>門</span>
-          <span className="char" style={{animationDelay: '0.2s'}}>培</span>
-          <span className="char" style={{animationDelay: '0.3s'}}>華</span>
-          <span className="char" style={{animationDelay: '0.4s'}}>中</span>
-          <span className="char" style={{animationDelay: '0.5s'}}>學</span>
-        </h1>
+        <MinecraftTitle text="澳門培華中學" />
         <p className="redirect-message">正在跳轉...</p>
       </div>
     </div>
