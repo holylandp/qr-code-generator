@@ -1,0 +1,109 @@
+.minecraft-title {
+  font-family: 'Courier New', 'VT323', monospace;
+  font-weight: 900;
+  font-size: 3.5rem;
+  letter-spacing: 8px;
+  margin: 0;
+  line-height: 1.2;
+  display: inline-block;
+  filter: contrast(1.5);
+}
+
+.minecraft-title .char {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 4rem;
+  text-shadow:
+    4px 4px 0px #9333ea,
+    -4px -4px 0px #7c3aed,
+    4px 0px 0px #a855f7,
+    0px 4px 0px #c084fc,
+    2px 2px 0px #6366f1,
+    -2px -2px 0px #8b5cf6;
+  animation: charBounce 0.6s ease-in-out infinite;
+  margin: 0 2px;
+}
+
+@keyframes charBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.1);
+  }
+}
+
+/* 紫色跳轉頁面背景 */
+.redirect-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2e1a47 0%, #7c3aed 50%, #a855f7 100%);
+  padding: 20px;
+}
+
+.redirect-content {
+  background: rgba(45, 20, 85, 0.95);
+  border-radius: 24px;
+  padding: 48px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid rgba(168, 85, 247, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #a855f7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-icon {
+  font-size: 64px;
+  color: #ef4444;
+  margin-bottom: 24px;
+}
+
+.redirect-content p {
+  color: #e0e7ff;
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.error-message {
+  color: #e0e7ff;
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.redirect-content button {
+  padding: 14px 32px;
+  background: rgba(168, 85, 247, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  color: #f1f5f9;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.redirect-content button:hover {
+  background: rgba(192, 132, 252, 0.9);
+  color: #fff;
+  border-color: #c084fc;
+  transform: translateY(-2px);
+}
