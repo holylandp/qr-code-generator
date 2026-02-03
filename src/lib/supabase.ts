@@ -117,7 +117,7 @@ export async function deleteDynamicQRCode(id: string): Promise<boolean> {
   console.log('🗑️ Attempting to delete QR code with ID:', id);
   console.log('🔑 Using Supabase URL:', supabaseUrl);
 
-  const { error, count, status, statusText } = await supabase
+  const { error, status, statusText } = await supabase
     .from('dynamic_qr_codes')
     .delete()
     .eq('id', id);
