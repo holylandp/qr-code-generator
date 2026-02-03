@@ -392,6 +392,25 @@ export function DynamicQR() {
       {/* Manage Tab */}
       {activeTab === 'manage' && (
         <div className="manage-section">
+          <button
+            onClick={() => setActiveTab('create')}
+            style={{
+              padding: '14px 40px',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              border: 'none',
+              borderRadius: '12px',
+              color: '#fff',
+              fontSize: '1rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              marginBottom: '20px',
+              boxShadow: '0 4px 14px rgba(99, 102, 241, 0.3)',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            建立活碼
+          </button>
+
           {isLoading ? (
             <div className="empty-state">
               <p>載入中...</p>
@@ -399,7 +418,6 @@ export function DynamicQR() {
           ) : dynamicCodes.length === 0 ? (
             <div className="empty-state">
               <p>暫無活碼</p>
-              <button onClick={() => setActiveTab('create')}>建立第一個活碼</button>
             </div>
           ) : (
             <div className="codes-list">
