@@ -10,7 +10,6 @@ import {
   type DynamicQRCode,
 } from '../lib/supabase';
 
-// 活码二维码预览组件
 function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,157 +27,100 @@ function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: str
           width: 200,
           margin: 2,
           color: {
-            dark: '#000000',
+            dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
             light: config?.colorLight || '#ffffff',
           },
           errorCorrectionLevel: 'H',
         } as any);
 
-        // 应用自定义样式
         if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
           const ctx = canvas.getContext('2d');
           if (!ctx) return;
 
-          const qrData = await QRCode.toDataURL(qrUrl, {
-            width: 200,
-            margin: 2,
-            color: {
-              dark: '#000000',
-              light: config?.colorLight || '#ffffff',
-            },
-            errorCorrectionLevel: 'H',
-          });
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvas.width;
+          tempCanvas.height = canvas.height;
+          const tempCtx = tempCanvas.getContext('2d');
+          if (!tempCtx) return;
+          tempCtx.drawImage(canvas, 0, 0);
 
-          const tempImg = new Image();
-          tempImg.onload = () => {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = canvas.width;
-            tempCanvas.height = canvas.height;
-            const tempCtx = tempCanvas.getContext('2d');
-            if (!tempCtx) return;
-            tempCtx.drawImage(tempImg, 0, 0);
+          ctx.fillStyle = config?.colorLight || '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = config?.colorLight || '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          if (config?.useGradient) {
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, config?.gradientStart || '#6366f1');
+            gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
+            ctx.fillStyle = gradient;
+          } else {
+            ctx.fillStyle = config?.colorDark || '#000000';
+          }
 
-            const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
+          const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+          const moduleSize = canvas.width / Math.sqrt(data.length / 4);
+          const moduleCount = Math.round(canvas.width / moduleSize);
 
-            // Find module size
-            let moduleSize = 1;
-            for (let x = 0; x < canvas.width; x++) {
-              const idx = (2 * canvas.width + x) * 4;
+          for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+              const x = col * moduleSize;
+              const y = row * moduleSize;
+              const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
+              
               if (data[idx] < 128) {
-                let darkCount = 0;
-                for (let i = x; i < canvas.width && darkCount < 8; i++) {
-                  const checkIdx = (2 * canvas.width + i) * 4;
-                  if (data[checkIdx] < 128) {
-                    darkCount++;
-                  } else {
+                const size = moduleSize - 1;
+                switch (config?.styleType) {
+                  case 'rounded':
+                    ctx.beginPath();
+                    ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
+                    ctx.fill();
                     break;
-                  }
-                }
-                moduleSize = darkCount;
-                break;
-              }
-            }
-
-            const gridSize = Math.floor((canvas.width - 4) / moduleSize);
-
-            for (let row = 0; row < gridSize; row++) {
-              for (let col = 0; col < gridSize; col++) {
-                const x = 2 + col * moduleSize;
-                const y = 2 + row * moduleSize;
-                const centerX = x + moduleSize / 2;
-                const centerY = y + moduleSize / 2;
-                const idx = (Math.floor(centerY) * canvas.width + Math.floor(centerX)) * 4;
-
-                if (data[idx] < 128) {
-                  if (config?.useGradient) {
-                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                    gradient.addColorStop(0, config?.gradientStart || '#6366f1');
-                    gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
-                    ctx.fillStyle = gradient;
-                  } else {
-                    ctx.fillStyle = config?.colorDark || '#000000';
-                  }
-
-                  const size = moduleSize - 0.5;
-                  const radius = size * 0.45;
-
-                  switch (config?.styleType) {
-                    case 'rounded':
-                      ctx.beginPath();
-                      const r = size * 0.25;
-                      ctx.moveTo(x + r, y);
-                      ctx.lineTo(x + size - r, y);
-                      ctx.quadraticCurveTo(x + size, y, x + size, y + r);
-                      ctx.lineTo(x + size, y + size - r);
-                      ctx.quadraticCurveTo(x + size, y + size, x + size - r, y + size);
-                      ctx.lineTo(x + r, y + size);
-                      ctx.quadraticCurveTo(x, y + size, x, y + size - r);
-                      ctx.lineTo(x, y + r);
-                      ctx.quadraticCurveTo(x, y, x + r, y);
-                      ctx.closePath();
-                      ctx.fill();
-                      break;
-                    case 'dot':
-                      ctx.beginPath();
-                      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-                      ctx.fill();
-                      break;
-                    case 'liquid':
-                      ctx.beginPath();
-                      ctx.arc(centerX, centerY, radius * 1.15, 0, Math.PI * 2);
-                      ctx.fill();
-                      break;
-                    default:
-                      ctx.fillRect(x, y, size, size);
-                  }
+                  case 'dot':
+                    ctx.beginPath();
+                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                  case 'liquid':
+                    ctx.beginPath();
+                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                  default:
+                    ctx.fillRect(x + 0.5, y + 0.5, size, size);
                 }
               }
             }
+          }
 
-            // 添加Logo
-            if (config?.logoImage) {
-              const logo = new Image();
-              logo.crossOrigin = 'anonymous';
-              logo.onload = () => {
-                const logoW = Math.min(config?.logoWidth || 40, 60);
-                const logoH = Math.min(config?.logoHeight || 40, 60);
-                const x = (canvas.width - logoW) / 2;
-                const y = (canvas.height - logoH) / 2;
+          if (config?.logoImage) {
+            const logo = new Image();
+            logo.crossOrigin = 'anonymous';
+            logo.onload = () => {
+              const logoW = Math.min(config?.logoWidth || 40, 60);
+              const logoH = Math.min(config?.logoHeight || 40, 60);
+              const x = (canvas.width - logoW) / 2;
+              const y = (canvas.height - logoH) / 2;
 
-                if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
-                  ctx.fillStyle = config.logoBackgroundColor;
-                  ctx.beginPath();
-                  const lx = x - (config?.logoMargin || 3);
-                  const ly = y - (config?.logoMargin || 3);
-                  const lw = logoW + (config?.logoMargin || 3) * 2;
-                  const lh = logoH + (config?.logoMargin || 3) * 2;
-                  const lr = config?.logoCornerRadius || 6;
-                  ctx.moveTo(lx + lr, ly);
-                  ctx.lineTo(lx + lw - lr, ly);
-                  ctx.quadraticCurveTo(lx + lw, ly, lx + lw, ly + lr);
-                  ctx.lineTo(lx + lw, ly + lh - lr);
-                  ctx.quadraticCurveTo(lx + lw, ly + lh, lx + lw - lr, ly + lh);
-                  ctx.lineTo(lx + lr, ly + lh);
-                  ctx.quadraticCurveTo(lx, ly + lh, lx, ly + lh - lr);
-                  ctx.lineTo(lx, ly + lr);
-                  ctx.quadraticCurveTo(lx, ly, lx + lr, ly);
-                  ctx.closePath();
-                  ctx.fill();
-                }
+              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+                ctx.fillStyle = config.logoBackgroundColor;
+                ctx.beginPath();
+                ctx.roundRect(
+                  x - (config?.logoMargin ||3),
+                  y - (config?.logoMargin ||3),
+                  logoW + (config?.logoMargin ||3) * 2,
+                  logoH + (config?.logoMargin ||3) * 2,
+                  config?.logoCornerRadius || 6
+                );
+                ctx.fill();
+              }
 
-                ctx.drawImage(logo, x, y, logoW, logoH);
-                setIsLoading(false);
-              };
-              logo.src = config.logoImage as string;
-            } else {
+              ctx.drawImage(logo, x, y, logoW, logoH);
               setIsLoading(false);
-            }
-          };
-          tempImg.src = qrData;
+            };
+            logo.src = config.logoImage as string;
+          } else {
+            setIsLoading(false);
+          }
         } else {
           setIsLoading(false);
         }
@@ -369,185 +311,109 @@ export function DynamicQR() {
     const canvas = document.createElement('canvas');
     const config = code.qr_config as QRCodeConfig;
     const qrUrl = `${baseUrl}/r/${code.short_code}`;
-    const qrConfig = config || {
-      width: 300,
-      height: 300,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: 'H' as const,
-      margin: 2,
-      useGradient: false,
-      styleType: 'square' as const,
-      gradientStart: '#6366f1',
-      gradientEnd: '#8b5cf6',
-      logoImage: null,
-      logoWidth: 60,
-      logoHeight: 60,
-      logoMargin: 5,
-      logoCornerRadius: 8,
-      logoBackgroundColor: '#ffffff',
-      backgroundImage: null,
-    };
     
     try {
       await QRCode.toCanvas(canvas, qrUrl, {
-        width: qrConfig.width,
-        margin: qrConfig.margin,
+        width: config?.width || 300,
+        margin: config?.margin || 2,
         color: {
-          dark: '#000000',
-          light: qrConfig.colorLight,
+          dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
+          light: config?.colorLight || '#ffffff',
         },
-        errorCorrectionLevel: qrConfig.correctLevel,
+        errorCorrectionLevel: config?.correctLevel || 'H',
       } as any);
 
-      if (qrConfig.useGradient || qrConfig.styleType !== 'square' || qrConfig.logoImage) {
+      if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
         const ctx = canvas.getContext('2d');
         if (!ctx) return canvas.toDataURL('image/png');
 
-        const qrData = await QRCode.toDataURL(qrUrl, {
-          width: qrConfig.width,
-          margin: qrConfig.margin,
-          color: {
-            dark: '#000000',
-            light: qrConfig.colorLight,
-          },
-          errorCorrectionLevel: qrConfig.correctLevel,
-        });
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        if (!tempCtx) return canvas.toDataURL('image/png');
+        tempCtx.drawImage(canvas, 0, 0);
 
-        return new Promise((resolve) => {
-          const tempImg = new Image();
-          tempImg.onload = () => {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = qrConfig.width;
-            tempCanvas.height = qrConfig.height;
-            const tempCtx = tempCanvas.getContext('2d');
-            if (!tempCtx) {
-              resolve(canvas.toDataURL('image/png'));
-              return;
-            }
-            tempCtx.drawImage(tempImg, 0, 0);
+        ctx.fillStyle = config?.colorLight || '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            const imageData = tempCtx.getImageData(0, 0, qrConfig.width, qrConfig.height);
-            const data = imageData.data;
+        if (config?.useGradient) {
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+          gradient.addColorStop(0, config?.gradientStart || '#6366f1');
+          gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
+          ctx.fillStyle = gradient;
+        } else {
+          ctx.fillStyle = config?.colorDark || '#000000';
+        }
 
-            let moduleSize = 1;
-            for (let x = 0; x < qrConfig.width; x++) {
-              const idx = (qrConfig.margin * qrConfig.width + x) * 4;
-              if (data[idx] < 128) {
-                let darkCount = 0;
-                for (let i = x; i < qrConfig.width && darkCount < 8; i++) {
-                  const checkIdx = (qrConfig.margin * qrConfig.width + i) * 4;
-                  if (data[checkIdx] < 128) {
-                    darkCount++;
-                  } else {
-                    break;
-                  }
-                }
-                moduleSize = darkCount;
-                break;
-              }
-            }
+        const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        const moduleSize = canvas.width / Math.sqrt(data.length / 4);
+        const moduleCount = Math.round(canvas.width / moduleSize);
 
-            ctx.fillStyle = qrConfig.colorLight;
-            ctx.fillRect(0, 0, qrConfig.width, qrConfig.height);
-
-            const gridSize = Math.floor((qrConfig.width - qrConfig.margin * 2) / moduleSize);
-
-            for (let row = 0; row < gridSize; row++) {
-              for (let col = 0; col < gridSize; col++) {
-                const x = qrConfig.margin + col * moduleSize;
-                const y = qrConfig.margin + row * moduleSize;
-                const centerX = x + moduleSize / 2;
-                const centerY = y + moduleSize / 2;
-                const idx = (Math.floor(centerY) * qrConfig.width + Math.floor(centerX)) * 4;
-
-                if (data[idx] < 128) {
-                  if (qrConfig.useGradient) {
-                    const gradient = ctx.createLinearGradient(0, 0, qrConfig.width, qrConfig.height);
-                    gradient.addColorStop(0, qrConfig.gradientStart);
-                    gradient.addColorStop(1, qrConfig.gradientEnd);
-                    ctx.fillStyle = gradient;
-                  } else {
-                    ctx.fillStyle = qrConfig.colorDark;
-                  }
-
-                  const size = moduleSize - 0.5;
-                  const radius = size * 0.45;
-
-                  switch (qrConfig.styleType) {
-                    case 'rounded':
-                      ctx.beginPath();
-                      const r = size * 0.25;
-                      ctx.moveTo(x + r, y);
-                      ctx.lineTo(x + size - r, y);
-                      ctx.quadraticCurveTo(x + size, y, x + size, y + r);
-                      ctx.lineTo(x + size, y + size - r);
-                      ctx.quadraticCurveTo(x + size, y + size, x + size - r, y + size);
-                      ctx.lineTo(x + r, y + size);
-                      ctx.quadraticCurveTo(x, y + size, x, y + size - r);
-                      ctx.lineTo(x, y + r);
-                      ctx.quadraticCurveTo(x, y, x + r, y);
-                      ctx.closePath();
-                      ctx.fill();
-                      break;
-                    case 'dot':
-                      ctx.beginPath();
-                      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-                      ctx.fill();
-                      break;
-                    case 'liquid':
-                      ctx.beginPath();
-                      ctx.arc(centerX, centerY, radius * 1.15, 0, Math.PI * 2);
-                      ctx.fill();
-                      break;
-                    default:
-                      ctx.fillRect(x, y, size, size);
-                  }
-                }
-              }
-            }
-
-            if (qrConfig.logoImage) {
-              const logo = new Image();
-              logo.crossOrigin = 'anonymous';
-              logo.onload = () => {
-                const x = (qrConfig.width - qrConfig.logoWidth) / 2;
-                const y = (qrConfig.height - qrConfig.logoHeight) / 2;
-
-                if (qrConfig.logoBackgroundColor && qrConfig.logoBackgroundColor !== 'transparent') {
-                  ctx.fillStyle = qrConfig.logoBackgroundColor;
+        for (let row = 0; row < moduleCount; row++) {
+          for (let col = 0; col < moduleCount; col++) {
+            const x = col * moduleSize;
+            const y = row * moduleSize;
+            const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
+            
+            if (data[idx] < 128) {
+              const size = moduleSize - 1;
+              switch (config?.styleType) {
+                case 'rounded':
                   ctx.beginPath();
-                  const lx = x - qrConfig.logoMargin;
-                  const ly = y - qrConfig.logoMargin;
-                  const lw = qrConfig.logoWidth + qrConfig.logoMargin * 2;
-                  const lh = qrConfig.logoHeight + qrConfig.logoMargin * 2;
-                  const lr = qrConfig.logoCornerRadius;
-                  ctx.moveTo(lx + lr, ly);
-                  ctx.lineTo(lx + lw - lr, ly);
-                  ctx.quadraticCurveTo(lx + lw, ly, lx + lw, ly + lr);
-                  ctx.lineTo(lx + lw, ly + lh - lr);
-                  ctx.quadraticCurveTo(lx + lw, ly + lh, lx + lw - lr, ly + lh);
-                  ctx.lineTo(lx + lr, ly + lh);
-                  ctx.quadraticCurveTo(lx, ly + lh, lx, ly + lh - lr);
-                  ctx.lineTo(lx, ly + lr);
-                  ctx.quadraticCurveTo(lx, ly, lx + lr, ly);
-                  ctx.closePath();
+                  ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
                   ctx.fill();
-                }
-
-                ctx.drawImage(logo, x, y, qrConfig.logoWidth, qrConfig.logoHeight);
-                resolve(canvas.toDataURL('image/png'));
-              };
-              logo.src = qrConfig.logoImage;
-            } else {
-              resolve(canvas.toDataURL('image/png'));
+                  break;
+                case 'dot':
+                  ctx.beginPath();
+                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
+                  ctx.fill();
+                  break;
+                case 'liquid':
+                  ctx.beginPath();
+                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
+                  ctx.fill();
+                  break;
+                default:
+                  ctx.fillRect(x + 0.5, y + 0.5, size, size);
+              }
             }
-          };
-          tempImg.src = qrData;
-        });
-      } else {
-        return canvas.toDataURL('image/png');
+          }
+        }
+
+        if (config?.logoImage) {
+          const logo = new Image();
+          logo.crossOrigin = 'anonymous';
+          await new Promise<void>((resolve) => {
+            logo.onload = () => {
+              const logoW = config?.logoWidth || 60;
+              const logoH = config?.logoHeight || 60;
+              const x = (canvas.width - logoW) / 2;
+              const y = (canvas.height - logoH) / 2;
+
+              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+                ctx.fillStyle = config.logoBackgroundColor;
+                ctx.beginPath();
+                ctx.roundRect(
+                  x - (config?.logoMargin ||5),
+                  y - (config?.logoMargin ||5),
+                  logoW + (config?.logoMargin ||5) * 2,
+                  logoH + (config?.logoMargin ||5) * 2,
+                  config?.logoCornerRadius || 8
+                );
+                ctx.fill();
+              }
+
+              ctx.drawImage(logo, x, y, logoW, logoH);
+              resolve();
+            };
+            logo.src = config.logoImage as string;
+          });
+        }
       }
+
+      return canvas.toDataURL('image/png');
     } catch (err) {
       console.error('QR generation error:', err);
       return '';
