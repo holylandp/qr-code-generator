@@ -19,7 +19,6 @@ function App() {
             <span className="title-icon">◈</span>
             培華二維碼生成器
           </h1>
-          <p className="app-subtitle">專業級二維碼生成工具 · 支援活碼 · 自訂樣式</p>
         </header>
 
         <main className="app-main">
@@ -30,14 +29,14 @@ function App() {
                 onClick={() => setActiveTab('static')}
               >
                 <span className="tab-icon">▣</span>
-                普通二維碼
+                普通二维码
               </button>
               <button
                 className={`tab-btn ${activeTab === 'dynamic' ? 'active' : ''}`}
                 onClick={() => setActiveTab('dynamic')}
               >
                 <span className="tab-icon">⟲</span>
-                活碼 (可修改)
+                活码 (可修改)
               </button>
             </div>
 
@@ -45,16 +44,16 @@ function App() {
               {activeTab === 'static' ? (
                 <div className="section">
                   <div className="section-header">
-                    <h2>普通二維碼生成</h2>
-                    <p>支援自訂顏色、樣式、新增Logo等功能</p>
+                    <h2>普通二维码生成</h2>
+                    <p>支持自定义颜色、样式、添加Logo等功能</p>
                   </div>
                   <QRGenerator />
                 </div>
               ) : (
                 <div className="section">
                   <div className="section-header">
-                    <h2>活碼管理</h2>
-                    <p>建立可隨時修改跳轉位址的二維碼，圖案永不改變</p>
+                    <h2>活码管理</h2>
+                    <p>创建可随时修改跳转地址的二维码，图案永不改变</p>
                   </div>
                   <DynamicQR />
                 </div>

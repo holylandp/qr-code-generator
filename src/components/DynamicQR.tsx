@@ -10,6 +10,7 @@ import {
   type DynamicQRCode,
 } from '../lib/supabase';
 
+// 活码二维码预览组件
 function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,100 +28,42 @@ function DynamicQRPreview({ code, baseUrl }: { code: DynamicQRCode; baseUrl: str
           width: 200,
           margin: 2,
           color: {
-            dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
+            dark: config?.colorDark || '#000000',
             light: config?.colorLight || '#ffffff',
           },
           errorCorrectionLevel: 'H',
         } as any);
 
-        if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
+        // 添加Logo
+        if (config?.logoImage) {
           const ctx = canvas.getContext('2d');
           if (!ctx) return;
 
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = canvas.width;
-          tempCanvas.height = canvas.height;
-          const tempCtx = tempCanvas.getContext('2d');
-          if (!tempCtx) return;
-          tempCtx.drawImage(canvas, 0, 0);
+          const logo = new Image();
+          logo.crossOrigin = 'anonymous';
+          logo.onload = () => {
+            const logoW = Math.min(config?.logoWidth || 40, 60);
+            const logoH = Math.min(config?.logoHeight || 40, 60);
+            const x = (canvas.width - logoW) / 2;
+            const y = (canvas.height - logoH) / 2;
 
-          ctx.fillStyle = config?.colorLight || '#ffffff';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-          if (config?.useGradient) {
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, config?.gradientStart || '#6366f1');
-            gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
-            ctx.fillStyle = gradient;
-          } else {
-            ctx.fillStyle = config?.colorDark || '#000000';
-          }
-
-          const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
-          const data = imageData.data;
-          const moduleSize = canvas.width / Math.sqrt(data.length / 4);
-          const moduleCount = Math.round(canvas.width / moduleSize);
-
-          for (let row = 0; row < moduleCount; row++) {
-            for (let col = 0; col < moduleCount; col++) {
-              const x = col * moduleSize;
-              const y = row * moduleSize;
-              const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
-              
-              if (data[idx] < 128) {
-                const size = moduleSize - 1;
-                switch (config?.styleType) {
-                  case 'rounded':
-                    ctx.beginPath();
-                    ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
-                    ctx.fill();
-                    break;
-                  case 'dot':
-                    ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  case 'liquid':
-                    ctx.beginPath();
-                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  default:
-                    ctx.fillRect(x + 0.5, y + 0.5, size, size);
-                }
-              }
+            if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+              ctx.fillStyle = config.logoBackgroundColor;
+              ctx.beginPath();
+              ctx.roundRect(
+                x - (config?.logoMargin ||3),
+                y - (config?.logoMargin ||3),
+                logoW + (config?.logoMargin ||3) * 2,
+                logoH + (config?.logoMargin ||3) * 2,
+                config?.logoCornerRadius || 6
+              );
+              ctx.fill();
             }
-          }
 
-          if (config?.logoImage) {
-            const logo = new Image();
-            logo.crossOrigin = 'anonymous';
-            logo.onload = () => {
-              const logoW = Math.min(config?.logoWidth || 40, 60);
-              const logoH = Math.min(config?.logoHeight || 40, 60);
-              const x = (canvas.width - logoW) / 2;
-              const y = (canvas.height - logoH) / 2;
-
-              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
-                ctx.fillStyle = config.logoBackgroundColor;
-                ctx.beginPath();
-                ctx.roundRect(
-                  x - (config?.logoMargin ||3),
-                  y - (config?.logoMargin ||3),
-                  logoW + (config?.logoMargin ||3) * 2,
-                  logoH + (config?.logoMargin ||3) * 2,
-                  config?.logoCornerRadius || 6
-                );
-                ctx.fill();
-              }
-
-              ctx.drawImage(logo, x, y, logoW, logoH);
-              setIsLoading(false);
-            };
-            logo.src = config.logoImage as string;
-          } else {
+            ctx.drawImage(logo, x, y, logoW, logoH);
             setIsLoading(false);
-          }
+          };
+          logo.src = config.logoImage as string;
         } else {
           setIsLoading(false);
         }
@@ -195,15 +138,12 @@ export function DynamicQR() {
     logoMargin: 5,
     logoCornerRadius: 8,
     logoBackgroundColor: '#ffffff',
-    styleType: 'square',
-    gradientStart: '#6366f1',
-    gradientEnd: '#8b5cf6',
-    useGradient: false,
     backgroundImage: null,
   });
 
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
+  // 加载所有活码
   useEffect(() => {
     loadDynamicCodes();
   }, []);
@@ -221,6 +161,7 @@ export function DynamicQR() {
       return;
     }
 
+    // 验证 URL
     let validUrl = targetUrl;
     if (!/^https?:\/\//i.test(validUrl)) {
       validUrl = 'https://' + validUrl;
@@ -246,6 +187,7 @@ export function DynamicQR() {
   const updateTargetUrl = async () => {
     if (!selectedCode || !editUrl.trim()) return;
 
+    // 验证 URL
     let validUrl = editUrl;
     if (!/^https?:\/\//i.test(validUrl)) {
       validUrl = 'https://' + validUrl;
@@ -307,6 +249,7 @@ export function DynamicQR() {
     });
   };
 
+  // 生成活码二维码图片
   const generateQRCodeImage = async (code: DynamicQRCode): Promise<string> => {
     const canvas = document.createElement('canvas');
     const config = code.qr_config as QRCodeConfig;
@@ -317,100 +260,44 @@ export function DynamicQR() {
         width: config?.width || 300,
         margin: config?.margin || 2,
         color: {
-          dark: config?.useGradient ? '#000000' : (config?.colorDark || '#000000'),
+          dark: config?.colorDark || '#000000',
           light: config?.colorLight || '#ffffff',
         },
         errorCorrectionLevel: config?.correctLevel || 'H',
       } as any);
 
-      if (config?.useGradient || config?.styleType !== 'square' || config?.logoImage) {
+      // 添加Logo
+      if (config?.logoImage) {
         const ctx = canvas.getContext('2d');
         if (!ctx) return canvas.toDataURL('image/png');
 
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext('2d');
-        if (!tempCtx) return canvas.toDataURL('image/png');
-        tempCtx.drawImage(canvas, 0, 0);
+        const logo = new Image();
+        logo.crossOrigin = 'anonymous';
+        await new Promise<void>((resolve) => {
+          logo.onload = () => {
+            const logoW = config?.logoWidth || 60;
+            const logoH = config?.logoHeight || 60;
+            const x = (canvas.width - logoW) / 2;
+            const y = (canvas.height - logoH) / 2;
 
-        ctx.fillStyle = config?.colorLight || '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        if (config?.useGradient) {
-          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          gradient.addColorStop(0, config?.gradientStart || '#6366f1');
-          gradient.addColorStop(1, config?.gradientEnd || '#8b5cf6');
-          ctx.fillStyle = gradient;
-        } else {
-          ctx.fillStyle = config?.colorDark || '#000000';
-        }
-
-        const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        const moduleSize = canvas.width / Math.sqrt(data.length / 4);
-        const moduleCount = Math.round(canvas.width / moduleSize);
-
-        for (let row = 0; row < moduleCount; row++) {
-          for (let col = 0; col < moduleCount; col++) {
-            const x = col * moduleSize;
-            const y = row * moduleSize;
-            const idx = (Math.floor(y + moduleSize/2) * canvas.width + Math.floor(x + moduleSize/2)) * 4;
-            
-            if (data[idx] < 128) {
-              const size = moduleSize - 1;
-              switch (config?.styleType) {
-                case 'rounded':
-                  ctx.beginPath();
-                  ctx.roundRect(x + 0.5, y + 0.5, size, size, size * 0.3);
-                  ctx.fill();
-                  break;
-                case 'dot':
-                  ctx.beginPath();
-                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.4, 0, Math.PI * 2);
-                  ctx.fill();
-                  break;
-                case 'liquid':
-                  ctx.beginPath();
-                  ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size * 0.45, 0, Math.PI * 2);
-                  ctx.fill();
-                  break;
-                default:
-                  ctx.fillRect(x + 0.5, y + 0.5, size, size);
-              }
+            if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
+              ctx.fillStyle = config.logoBackgroundColor;
+              ctx.beginPath();
+              ctx.roundRect(
+                x - (config?.logoMargin ||5),
+                y - (config?.logoMargin ||5),
+                logoW + (config?.logoMargin ||5) * 2,
+                logoH + (config?.logoMargin ||5) * 2,
+                config?.logoCornerRadius || 8
+              );
+              ctx.fill();
             }
-          }
-        }
 
-        if (config?.logoImage) {
-          const logo = new Image();
-          logo.crossOrigin = 'anonymous';
-          await new Promise<void>((resolve) => {
-            logo.onload = () => {
-              const logoW = config?.logoWidth || 60;
-              const logoH = config?.logoHeight || 60;
-              const x = (canvas.width - logoW) / 2;
-              const y = (canvas.height - logoH) / 2;
-
-              if (config?.logoBackgroundColor && config?.logoBackgroundColor !== 'transparent') {
-                ctx.fillStyle = config.logoBackgroundColor;
-                ctx.beginPath();
-                ctx.roundRect(
-                  x - (config?.logoMargin ||5),
-                  y - (config?.logoMargin ||5),
-                  logoW + (config?.logoMargin ||5) * 2,
-                  logoH + (config?.logoMargin ||5) * 2,
-                  config?.logoCornerRadius || 8
-                );
-                ctx.fill();
-              }
-
-              ctx.drawImage(logo, x, y, logoW, logoH);
-              resolve();
-            };
-            logo.src = config.logoImage as string;
-          });
-        }
+            ctx.drawImage(logo, x, y, logoW, logoH);
+            resolve();
+          };
+          logo.src = config.logoImage as string;
+        });
       }
 
       return canvas.toDataURL('image/png');
@@ -420,6 +307,7 @@ export function DynamicQR() {
     }
   };
 
+  // 下载活码二维码
   const downloadQRCode = async (code: DynamicQRCode) => {
     const dataUrl = await generateQRCodeImage(code);
     if (!dataUrl) {
@@ -434,6 +322,7 @@ export function DynamicQR() {
 
   return (
     <div className="dynamic-qr-container">
+      {/* Tab Navigation */}
       <div className="tab-navigation">
         <button
           className={activeTab === 'create' ? 'active' : ''}
@@ -449,6 +338,7 @@ export function DynamicQR() {
         </button>
       </div>
 
+      {/* Create Tab */}
       {activeTab === 'create' && (
         <div className="create-section">
           <div className="create-form">
@@ -499,6 +389,7 @@ export function DynamicQR() {
         </div>
       )}
 
+      {/* Manage Tab */}
       {activeTab === 'manage' && (
         <div className="manage-section">
           {isLoading ? (
@@ -522,6 +413,7 @@ export function DynamicQR() {
                       </span>
                     </div>
 
+                    {/* 活码二维码预览 */}
                     <DynamicQRPreview code={code} baseUrl={baseUrl} />
                     
                     <div className="url-section">
@@ -607,6 +499,7 @@ export function DynamicQR() {
         </div>
       )}
 
+      {/* Edit Modal */}
       {showEditModal && selectedCode && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
