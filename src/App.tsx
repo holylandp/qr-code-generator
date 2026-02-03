@@ -19,6 +19,7 @@ function App() {
             <span className="title-icon">◈</span>
             培華二維碼生成器
           </h1>
+          <p className="app-subtitle">專業級二維碼生成工具 · 支援活碼 · 自訂樣式</p>
         </header>
 
         <main className="app-main">
@@ -63,7 +64,7 @@ function App() {
         </main>
 
         <footer className="app-footer">
-          <p>© 2025 培華二維碼生成器 | Powered by React</p>
+          <p>© 2026 培華二維碼生成器 | Powered by Z</p>
         </footer>
       </div>
     </div>
