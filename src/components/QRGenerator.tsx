@@ -70,133 +70,170 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
           width: config.width,
           margin: config.margin,
           color: {
-            dark: config.useGradient ? '#000000' : config.colorDark,
+            dark: '#000000',
             light: config.colorLight,
           },
           errorCorrectionLevel: config.correctLevel,
         } as any);
 
-        // If using gradient or custom style, we need to modify the canvas
+        // If using gradient, custom style, or logo, we need to modify the canvas
         if (config.useGradient || config.styleType !== 'square' || config.logoImage) {
           const ctx = canvas.getContext('2d');
           if (!ctx) return;
 
-          // Get image data
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = config.width;
-          tempCanvas.height = config.height;
-          const tempCtx = tempCanvas.getContext('2d');
-          if (!tempCtx) return;
-          tempCtx.drawImage(canvas, 0, 0);
+          // Get the actual QR code matrix data
+          const qrData = await QRCode.toDataURL(config.text || 'https://example.com', {
+            width: config.width,
+            margin: config.margin,
+            color: {
+              dark: '#000000',
+              light: config.colorLight,
+            },
+            errorCorrectionLevel: config.correctLevel,
+          });
 
-          // Clear and redraw with custom styling
-          ctx.fillStyle = config.colorLight;
-          ctx.fillRect(0, 0, config.width, config.height);
+          // Create a temporary canvas to get the QR code data
+          const tempImg = new Image();
+          tempImg.onload = () => {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = config.width;
+            tempCanvas.height = config.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            if (!tempCtx) return;
+            tempCtx.drawImage(tempImg, 0, 0);
 
-          // Apply gradient if enabled
-          if (config.useGradient) {
-            const gradient = ctx.createLinearGradient(0, 0, config.width, config.height);
-            gradient.addColorStop(0, config.gradientStart);
-            gradient.addColorStop(1, config.gradientEnd);
-            ctx.fillStyle = gradient;
-          } else {
-            ctx.fillStyle = config.colorDark;
-          }
+            // Get raw pixel data and find module size
+            const imageData = tempCtx.getImageData(0, 0, config.width, config.height);
+            const data = imageData.data;
 
-          // Draw modules with selected style
-          const imageData = tempCtx.getImageData(0, 0, config.width, config.height);
-          const data = imageData.data;
-          const moduleSize = config.width / Math.sqrt(data.length / 4);
-          const moduleCount = Math.round(config.width / moduleSize);
-
-          for (let row = 0; row < moduleCount; row++) {
-            for (let col = 0; col < moduleCount; col++) {
-              const x = col * moduleSize;
-              const y = row * moduleSize;
-              const idx = (Math.floor(y + moduleSize/2) * config.width + Math.floor(x + moduleSize/2)) * 4;
-
-              // Check if pixel is dark (QR code module)
+            // Find module size by analyzing the QR code structure
+            let moduleSize = 1;
+            // Look for the first dark pixel from the left edge to find the margin
+            for (let x = 0; x < config.width; x++) {
+              const idx = (config.margin * config.width + x) * 4;
               if (data[idx] < 128) {
-                const size = Math.floor(moduleSize) - 1;
+                // Found first dark pixel, now find when it ends
+                let darkCount = 0;
+                for (let i = x; i < config.width && darkCount < 8; i++) {
+                  const checkIdx = (config.margin * config.width + i) * 4;
+                  if (data[checkIdx] < 128) {
+                    darkCount++;
+                  } else {
+                    break;
+                  }
+                }
+                moduleSize = darkCount;
+                break;
+              }
+            }
+
+            // Clear canvas with background color
+            ctx.fillStyle = config.colorLight;
+            ctx.fillRect(0, 0, config.width, config.height);
+
+            // Calculate grid dimensions
+            const gridSize = Math.floor((config.width - config.margin * 2) / moduleSize);
+
+            // Draw modules with custom styling
+            for (let row = 0; row < gridSize; row++) {
+              for (let col = 0; col < gridSize; col++) {
+                const x = config.margin + col * moduleSize;
+                const y = config.margin + row * moduleSize;
                 const centerX = x + moduleSize / 2;
                 const centerY = y + moduleSize / 2;
-                const radius = size * 0.4;
 
-                switch (config.styleType) {
-                  case 'rounded':
-                    // Use path with arc for rounded corners (more compatible)
-                    ctx.beginPath();
-                    const r = size * 0.2; // corner radius
-                    const s = size;
-                    const px = x + 0.5;
-                    const py = y + 0.5;
-                    ctx.moveTo(px + r, py);
-                    ctx.lineTo(px + s - r, py);
-                    ctx.quadraticCurveTo(px + s, py, px + s, py + r);
-                    ctx.lineTo(px + s, py + s - r);
-                    ctx.quadraticCurveTo(px + s, py + s, px + s - r, py + s);
-                    ctx.lineTo(px + r, py + s);
-                    ctx.quadraticCurveTo(px, py + s, px, py + s - r);
-                    ctx.lineTo(px, py + r);
-                    ctx.quadraticCurveTo(px, py, px + r, py);
-                    ctx.closePath();
-                    ctx.fill();
-                    break;
-                  case 'dot':
-                    ctx.beginPath();
-                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  case 'liquid':
-                    ctx.beginPath();
-                    ctx.arc(centerX, centerY, radius * 1.1, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                  default:
-                    ctx.fillRect(x + 0.5, y + 0.5, size, size);
+                // Sample center pixel to determine if module is dark
+                const idx = (Math.floor(centerY) * config.width + Math.floor(centerX)) * 4;
+
+                if (data[idx] < 128) {
+                  // Apply gradient if enabled
+                  if (config.useGradient) {
+                    const gradient = ctx.createLinearGradient(0, 0, config.width, config.height);
+                    gradient.addColorStop(0, config.gradientStart);
+                    gradient.addColorStop(1, config.gradientEnd);
+                    ctx.fillStyle = gradient;
+                  } else {
+                    ctx.fillStyle = config.colorDark;
+                  }
+
+                  const size = moduleSize - 0.5;
+                  const radius = size * 0.45;
+
+                  switch (config.styleType) {
+                    case 'rounded':
+                      ctx.beginPath();
+                      const r = size * 0.25;
+                      const px = x;
+                      const py = y;
+                      ctx.moveTo(px + r, py);
+                      ctx.lineTo(px + size - r, py);
+                      ctx.quadraticCurveTo(px + size, py, px + size, py + r);
+                      ctx.lineTo(px + size, py + size - r);
+                      ctx.quadraticCurveTo(px + size, py + size, px + size - r, py + size);
+                      ctx.lineTo(px + r, py + size);
+                      ctx.quadraticCurveTo(px, py + size, px, py + size - r);
+                      ctx.lineTo(px, py + r);
+                      ctx.quadraticCurveTo(px, py, px + r, py);
+                      ctx.closePath();
+                      ctx.fill();
+                      break;
+                    case 'dot':
+                      ctx.beginPath();
+                      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                      ctx.fill();
+                      break;
+                    case 'liquid':
+                      ctx.beginPath();
+                      ctx.arc(centerX, centerY, radius * 1.15, 0, Math.PI * 2);
+                      ctx.fill();
+                      break;
+                    default:
+                      ctx.fillRect(x, y, size, size);
+                  }
                 }
               }
             }
-          }
 
-          // Add logo if present
-          if (config.logoImage) {
-            const logo = new Image();
-            logo.crossOrigin = 'anonymous';
-            logo.onload = () => {
-              const x = (config.width - config.logoWidth) / 2;
-              const y = (config.height - config.logoHeight) / 2;
+            // Add logo if present
+            if (config.logoImage) {
+              const logo = new Image();
+              logo.crossOrigin = 'anonymous';
+              logo.onload = () => {
+                const x = (config.width - config.logoWidth) / 2;
+                const y = (config.height - config.logoHeight) / 2;
 
-              // Logo background - use path with arc for rounded corners
-              if (config.logoBackgroundColor !== 'transparent') {
-                ctx.fillStyle = config.logoBackgroundColor;
-                ctx.beginPath();
-                const lx = x - config.logoMargin;
-                const ly = y - config.logoMargin;
-                const lw = config.logoWidth + config.logoMargin * 2;
-                const lh = config.logoHeight + config.logoMargin * 2;
-                const lr = config.logoCornerRadius;
-                ctx.moveTo(lx + lr, ly);
-                ctx.lineTo(lx + lw - lr, ly);
-                ctx.quadraticCurveTo(lx + lw, ly, lx + lw, ly + lr);
-                ctx.lineTo(lx + lw, ly + lh - lr);
-                ctx.quadraticCurveTo(lx + lw, ly + lh, lx + lw - lr, ly + lh);
-                ctx.lineTo(lx + lr, ly + lh);
-                ctx.quadraticCurveTo(lx, ly + lh, lx, ly + lh - lr);
-                ctx.lineTo(lx, ly + lr);
-                ctx.quadraticCurveTo(lx, ly, lx + lr, ly);
-                ctx.closePath();
-                ctx.fill();
-              }
+                // Logo background - use path with arc for rounded corners
+                if (config.logoBackgroundColor !== 'transparent') {
+                  ctx.fillStyle = config.logoBackgroundColor;
+                  ctx.beginPath();
+                  const lx = x - config.logoMargin;
+                  const ly = y - config.logoMargin;
+                  const lw = config.logoWidth + config.logoMargin * 2;
+                  const lh = config.logoHeight + config.logoMargin * 2;
+                  const lr = config.logoCornerRadius;
+                  ctx.moveTo(lx + lr, ly);
+                  ctx.lineTo(lx + lw - lr, ly);
+                  ctx.quadraticCurveTo(lx + lw, ly, lx + lw, ly + lr);
+                  ctx.lineTo(lx + lw, ly + lh - lr);
+                  ctx.quadraticCurveTo(lx + lw, ly + lh, lx + lw - lr, ly + lh);
+                  ctx.lineTo(lx + lr, ly + lh);
+                  ctx.quadraticCurveTo(lx, ly + lh, lx, ly + lh - lr);
+                  ctx.lineTo(lx, ly + lr);
+                  ctx.quadraticCurveTo(lx, ly, lx + lr, ly);
+                  ctx.closePath();
+                  ctx.fill();
+                }
 
-              // Logo image
-              ctx.drawImage(logo, x, y, config.logoWidth, config.logoHeight);
+                // Logo image
+                ctx.drawImage(logo, x, y, config.logoWidth, config.logoHeight);
+                setDataUrl(canvas.toDataURL('image/png'));
+              };
+              logo.src = config.logoImage as string;
+            } else {
               setDataUrl(canvas.toDataURL('image/png'));
-            };
-            logo.src = config.logoImage as string;
-          } else {
-            setDataUrl(canvas.toDataURL('image/png'));
-          }
+            }
+          };
+          tempImg.src = qrData;
         } else {
           setDataUrl(canvas.toDataURL('image/png'));
         }
@@ -242,16 +279,15 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
           width={config.width}
           height={config.height}
           style={{ maxWidth: '100%', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.3)' }}
-        />
-      </div>
+        />\n      </div>
 
       <div className="qr-controls" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <div className="control-group">
-          <label style={{ display: 'block', marginBottom: '5px', color: '#94a3b8' }}>链接地址</label>
+          <label style={{ display: 'block', marginBottom: '5px', color: '#94a3b8' }}>連結地址</label>
           <textarea
             value={config.text}
             onChange={(e) => updateConfig({ text: e.target.value })}
-            placeholder="请输入链接或文本"
+            placeholder="請輸入連結或文字"
             rows={3}
             style={{
               width: '100%',
@@ -312,7 +348,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
               checked={config.useGradient}
               onChange={(e) => updateConfig({ useGradient: e.target.checked })}
             />
-            使用渐变色
+            使用漸層色
           </label>
           {config.useGradient && (
             <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
@@ -334,7 +370,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
         </div>
 
         <div className="control-group">
-          <label style={{ display: 'block', marginBottom: '8px', color: '#94a3b8' }}>码点样式</label>
+          <label style={{ display: 'block', marginBottom: '5px', color: '#94a3b8' }}>碼點樣式</label>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {(['square', 'rounded', 'dot', 'liquid'] as const).map((style) => (
               <button
@@ -359,7 +395,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
         </div>
 
         <div className="control-group">
-          <label style={{ display: 'block', marginBottom: '5px', color: '#94a3b8' }}>容错级别</label>
+          <label style={{ display: 'block', marginBottom: '5px', color: '#94a3b8' }}>容錯級別</label>
           <select
             value={config.correctLevel}
             onChange={(e) => updateConfig({ correctLevel: e.target.value as QRCodeConfig['correctLevel'] })}
@@ -400,7 +436,7 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
                 display: 'inline-block'
               }}
             >
-              {config.logoImage ? '更换 Logo' : '选择 Logo'}
+              {config.logoImage ? '更換 Logo' : '選擇 Logo'}
             </label>
             {config.logoImage && (
               <button
@@ -448,12 +484,12 @@ export function QRGenerator({ config: externalConfig, onConfigChange }: QRGenera
             borderRadius: '12px',
             color: '#fff',
             fontSize: '1rem',
-            fontWeight: '600',
+            fontWeight: 600,
             cursor: dataUrl ? 'pointer' : 'not-allowed',
             marginTop: '10px'
           }}
         >
-          下载二维码
+          下載二維碼
         </button>
       </div>
     </div>
