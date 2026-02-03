@@ -17,7 +17,12 @@ export function RedirectHandler() {
         window.location.href = code.target_url;
       } else { setStatus('not-found'); }
     };
-    handleRedirect();
+    
+    const timer = setTimeout(() => {
+      handleRedirect();
+    }, 1500); // 1.5秒後開始跳轉
+    
+    return () => clearTimeout(timer);
   }, []);
 
   if (status === 'not-found') {
