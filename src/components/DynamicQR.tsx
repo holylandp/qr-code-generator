@@ -396,35 +396,6 @@ export function DynamicQR() {
       {/* Manage Tab */}
       {activeTab === 'manage' && (
         <div className="manage-section">
-          <div style={{
-            background: 'rgba(99, 102, 241, 0.1)',
-            border: '1px solid rgba(99, 102, 241, 0.3)',
-            borderRadius: '8px',
-            padding: '12px 16px',
-            marginBottom: '16px',
-            fontSize: '0.85rem',
-            color: '#e0e7ff'
-          }}>
-            <strong>⚠️ 刪除功能修復說明：</strong><br/>
-            如果刪除活碼後刷新仍存在，請在 Supabase Dashboard 的 SQL Editor 中執行以下SQL：
-            <code style={{
-              display: 'block',
-              background: 'rgba(0,0,0,0.3)',
-              padding: '8px',
-              marginTop: '8px',
-              borderRadius: '4px',
-              fontSize: '0.75rem',
-              fontFamily: 'monospace',
-              overflowX: 'auto'
-            }}>
-              DROP POLICY IF EXISTS "Allow anon users to delete dynamic qr codes"<br/>
-              ON public.dynamic_qr_codes;<br/><br/>
-              CREATE POLICY "Allow anon users to delete dynamic qr codes"<br/>
-              ON public.dynamic_qr_codes<br/>
-              FOR DELETE TO anon USING (true);
-            </code>
-          </div>
-
           <button
             onClick={() => setActiveTab('create')}
             style={{
