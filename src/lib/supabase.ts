@@ -114,16 +114,29 @@ export async function updateDynamicQRCodeTarget(
 
 // 删除活码
 export async function deleteDynamicQRCode(id: string): Promise<boolean> {
-  const { error } = await supabase
+  console.log('🗑️ Attempting to delete QR code with ID:', id);
+  console.log('🔑 Using Supabase URL:', supabaseUrl);
+
+  const { error, count, status, statusText } = await supabase
     .from('dynamic_qr_codes')
     .delete()
     .eq('id', id);
 
   if (error) {
-    console.error('Error deleting QR code:', error);
+    console.error('❌ Error deleting QR code:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+      status: status,
+      statusText: statusText
+    });
     return false;
   }
 
+  console.log('✅ QR code deleted successfully');
+  console.log('Status:', status, statusText);
   return true;
 }
 
