@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase RLS策略修复指南</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+    .step {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .step-number {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: bold;
+      margin-right: 12px;
+    }
+    .step-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+      margin: 10px 0;
+    }
+    .step-content {
+      color: #666;
+      line-height: 1.8;
+    }
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 20px 0;
+      position: relative;
+    }
+    .code-block::before {
+      content: 'SQL';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      font-size: 12px;
+      border-bottom-left-radius: 8px;
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 20px 10px;
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    .success {
+      background: #d4edda;
+      border-left-color: #28a745;
+      color: #155724;
+    }
+    .warning {
+      background: #fff3cd;
+      border-left-color: #ffc107;
+      color: #856404;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .copy-btn:hover {
+      background: #5568d3;
+    }
+    .project-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .project-info code {
+      background: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #667eea;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Supabase RLS策略修复指南</h1>
+
+    <div class="project-info">
+      <strong>📌 项目信息：</strong><br>
+      项目Ref: <code>uyksksiddunmirsdlhlw</code><br>
+      数据库URL: <code>https://uyksksiddunmirsdlhlw.supabase.co</code>
+    </div>
+
+    <div class="step warning">
+      <span class="step-number">!</span>
+      <div class="step-title">问题说明</div>
+      <div class="step-content">
+        当前活码删除功能无法正常工作，因为数据库的RLS（Row Level Security）策略阻止了匿名用户执行删除操作。需要创建一个允许删除的策略。
+      </div>
+    </div>
+
+    <h2>📋 修复步骤</h2>
+
+    <div class="step">
+      <span class="step-number">1</span>
+      <div class="step-title">登录Supabase Dashboard</div>
+      <div class="step-content">
+        <a href="https://supabase.com/dashboard" target="_blank" class="btn">打开Supabase Dashboard</a>
+        <p>使用您的账号登录</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-number">2</span>
+      <div class="step-title">选择项目</div>
+      <div class="step-content">
+        在项目列表中找到并点击项目：<br>
+        <strong>uyksksiddunmirsdlhlw</strong>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-number">3</span>
+      <div class="step-title">打开SQL Editor</div>
+      <div class="step-content">
+        在左侧导航栏找到 <strong>SQL Editor</strong> 图标并点击
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-number">4</span>
+      <div class="step-title">创建新的查询</div>
+      <div class="step-content">
+        点击 "New query" 按钮打开新的查询窗口
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-number">5</span>
+      <div class="step-title">粘贴并执行SQL</div>
+      <div class="step-content">
+        将以下SQL代码粘贴到查询窗口中，然后点击 "Run" 按钮：
+
+        <div class="code-block" id="sqlCode">
+          <button class="copy-btn" onclick="copySQL()">📋 复制</button>
+          <pre>-- 删除可能存在的旧策略
+DROP POLICY IF EXISTS "Allow anon users to delete dynamic qr codes" ON public.dynamic_qr_codes;
+
+-- 创建允许匿名用户删除的策略（DELETE操作不需要WITH CHECK）
+CREATE POLICY "Allow anon users to delete dynamic qr codes"
+ON public.dynamic_qr_codes
+FOR DELETE
+TO anon
+USING (true);
+
+-- 验证策略已创建
+SELECT policyname, tablename, cmd
+FROM pg_policies
+WHERE tablename = 'dynamic_qr_codes' AND cmd = 'DELETE';</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step success">
+      <span class="step-number">✓</span>
+      <div class="step-title">验证修复</div>
+      <div class="step-content">
+        <p>执行成功后，您应该看到策略已创建的确认信息。现在可以：</p>
+        <ol>
+          <li>返回您的QR生成器应用</li>
+          <li>尝试删除一个活码</li>
+          <li>刷新页面确认活码已被成功删除</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2>📝 需要帮助？</h2>
+    <p>如果遇到问题，请检查：</p>
+    <ul>
+      <li>是否选择了正确的项目</li>
+      <li>SQL语句是否完整复制</li>
+      <li>是否有足够的权限执行DDL操作</li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 40px; color: #999;">
+      <p>生成时间: <span id="timestamp"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function copySQL() {
+      const sqlCode = document.getElementById('sqlCode').innerText.replace('📋 复制\n', '');
+      navigator.clipboard.writeText(sqlCode).then(() => {
+        alert('✅ SQL已复制到剪贴板！');
+      }).catch(() => {
+        alert('❌ 复制失败，请手动选择并复制');
+      });
+    }
+
+    document.getElementById('timestamp').textContent = new Date().toLocaleString('zh-TW');
+  </script>
+</body>
+</html>
